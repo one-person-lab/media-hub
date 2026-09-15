@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "自媒体工作台采集",
+  "version": "1.0.0",
+  "description": "一键采集小红书笔记到本地自媒体工作台（写入 content/参考资料/）",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["http://localhost:5173/*"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

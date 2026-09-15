@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap');
+
+@import "tailwindcss";
+
+/* Tailwind v4 主题令牌：生成 bg-neo-*、shadow-neo 等工具类 */
+@theme {
+  --font-sans: 'Space Grotesk', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --color-neo-bg: #f7efe1;
+  --color-neo-paper: #fffcf5;
+  --color-neo-yellow: #ffe89b;
+  --color-neo-green: #b9f0c4;
+  --color-neo-pink: #ffd6e8;
+  --color-neo-blue: #bfe0ff;
+  --color-neo-purple: #e3d1ff;
+  --shadow-neo: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-neo-lg: 8px 8px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-neo-sm: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-neo-bg);
+  color: #111;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 900;
+  color: #111;
+}
+
+/* Neo-Brutalism 组件类。
+   放进 @layer components：Tailwind 工具类在 utilities 层，特异性高于普通 CSS，
+   这样 text-sm、flex-1 等才能正常覆盖组件默认值。 */
+@layer components {
+  .neo-card {
+    border: 2px solid #111;
+    border-radius: 0.75rem;
+    background: var(--color-neo-paper);
+    box-shadow: var(--shadow-neo);
+    padding: 1.25rem;
+  }
+
+  .neo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    border: 2px solid #111;
+    border-radius: 9999px;
+    background: var(--color-neo-paper);
+    box-shadow: var(--shadow-neo-sm);
+    padding: 0.5rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #111;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    white-space: nowrap;
+  }
+
+  .neo-btn:hover {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 1);
+  }
+
+  .neo-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+
+  .neo-btn-primary { background: var(--color-neo-yellow); }
+  .neo-btn-success { background: var(--color-neo-green); }
+  .neo-btn-danger  { background: var(--color-neo-pink); }
+  .neo-btn-info    { background: var(--color-neo-blue); }
+
+  .neo-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border: 2px solid #111;
+    border-radius: 9999px;
+    padding: 0.125rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: white;
+    white-space: nowrap;
+  }
+
+  .neo-input {
+    border: 2px solid #111;
+    border-radius: 0.5rem;
+    background: white;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .neo-input:focus {
+    outline: none;
+    box-shadow: var(--shadow-neo-sm);
+  }
+}
+
+/* 状态颜色 */
+.status-not-start  { background: #e5e5e5; }
+.status-creating   { background: var(--color-neo-yellow); }
+.status-ready      { background: var(--color-neo-blue); }
+.status-publishing { background: var(--color-neo-purple); }
+.status-published  { background: var(--color-neo-green); }
+.status-failed     { background: var(--color-neo-pink); }

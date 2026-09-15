@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 300px;
+      font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: #fffcf5;
+      color: #111;
+    }
+    .head {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 16px 10px;
+    }
+    .logo {
+      width: 34px; height: 34px; flex: none;
+      display: flex; align-items: center; justify-content: center;
+      background: #111; color: #ffe89b;
+      border-radius: 8px; border: 2px solid #111;
+      font-size: 18px; font-weight: 900;
+      box-shadow: 2px 2px 0 #111;
+    }
+    .head h1 { font-size: 15px; font-weight: 900; letter-spacing: 0.5px; }
+    .head p  { font-size: 11px; color: #8a8578; margin-top: 1px; }
+    .body { padding: 0 16px 14px; }
+    .target {
+      display: flex; align-items: center; justify-content: space-between;
+      border: 2px solid #111; border-radius: 8px;
+      background: #fff; padding: 9px 12px;
+      font-size: 12px; font-weight: 700;
+      box-shadow: 2px 2px 0 #111;
+      margin-bottom: 12px;
+    }
+    .target span:last-child { color: #8a8578; font-weight: 400; font-size: 11px; }
+    #collectBtn {
+      width: 100%;
+      border: 2px solid #111; border-radius: 10px;
+      background: #e94f4f; color: #fff;
+      font-size: 14px; font-weight: 900;
+      padding: 11px 0; cursor: pointer;
+      box-shadow: 3px 3px 0 #111;
+      transition: transform 0.05s, box-shadow 0.05s;
+    }
+    #collectBtn:hover:not(:disabled) { transform: translate(1px,1px); box-shadow: 2px 2px 0 #111; }
+    #collectBtn:active:not(:disabled) { transform: translate(3px,3px); box-shadow: none; }
+    #collectBtn:disabled { background: #d8d2c4; color: #8a8578; cursor: not-allowed; }
+    #status {
+      margin-top: 10px;
+      border: 2px dashed #c9c2b2; border-radius: 8px;
+      background: #f7efe1; padding: 8px 11px;
+      font-size: 11px; line-height: 1.6; color: #6b6558;
+      word-break: break-all; display: none; min-height: 20px;
+    }
+    #status.ok    { border-color: #111; background: #d9f2d0; color: #1c293c; }
+    #status.error { border-color: #111; background: #ffd6e0; color: #7a1f33; }
+    .foot {
+      border-top: 1px solid #e5ddcc;
+      padding: 8px 16px; font-size: 10px; color: #a49c88;
+      display: flex; justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <div class="head">
+    <div class="logo">醒</div>
+    <div>
+      <h1>一键采集小红书</h1>
+      <p id="pageState">正在检查页面…</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="target">
+      <span>📁 写入 · 自媒体工作台 参考资料</span>
+      <span>localhost:5173</span>
+    </div>
+    <button id="collectBtn" disabled>↗ 采集当前笔记</button>
+    <div id="status"></div>
+  </div>
+  <div class="foot">
+    <span>只采集当前浏览的单条笔记</span>
+    <span>dev server 需在运行</span>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
