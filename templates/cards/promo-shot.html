@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background:
+      radial-gradient(980px 700px at 88% 8%, rgba(244,199,124,.13) 0%, rgba(244,199,124,0) 66%),
+      radial-gradient(720px 600px at -8% 78%, rgba(111,211,184,.08) 0%, rgba(111,211,184,0) 70%),
+      linear-gradient(158deg, #0a1220 0%, #101927 55%, #0a1220 100%);
+    color: #f4f7fb;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    overflow: hidden; position: relative;
+  }
+
+  .head { position: absolute; left: 88px; right: 88px; top: 96px; }
+  .kicker { font-size: 28px; letter-spacing: 3px; color: #f4c77c; }
+  .title { margin-top: 20px; }
+  .title .ln { display: block; }
+  .title b { font-size: __ZH__; line-height: 1.28; font-weight: 900; letter-spacing: -2px; }
+  .title b.hot { color: #f4f7fb; }
+  .title b.pale { color: #f4c77c; }
+
+  .body { position: absolute; left: 88px; right: 88px; top: __GAP__; display: flex; align-items: flex-start; gap: 66px; }
+  .phone {
+    flex: 0 0 auto; width: 430px; height: 930px;
+    border: 5px solid rgba(244,199,124,.42); border-radius: 56px; overflow: hidden; background: #101927;
+    box-shadow: 0 44px 110px rgba(0,0,0,.72), 0 0 120px rgba(244,199,124,.16);
+    transform: rotate(-2deg);
+  }
+  .phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+
+  .side { flex: 1 1 auto; padding-top: 18px; counter-reset: step; }
+  .side .tag {
+    display: inline-block; margin-bottom: 22px; font-size: 22px; font-weight: 800; letter-spacing: 1px;
+    color: #14202f; background: #6fd3b8; border-radius: 999px; padding: 8px 18px;
+  }
+  .side .tag:empty { display: none; }
+  .rows .item { position: relative; padding: 30px 0 30px 92px; border-bottom: 2px solid rgba(255,255,255,.08); counter-increment: step; }
+  .rows .item:last-child { border-bottom: 0; }
+  .rows .item::before {
+    content: "0" counter(step); position: absolute; left: 0; top: 30px;
+    font-size: 40px; font-weight: 900; color: #f4c77c; letter-spacing: -1px;
+  }
+  .rows .zh { font-size: 38px; line-height: 1.48; font-weight: 700; color: #f4f7fb; }
+  .rows .zh b.em { color: #f4c77c; font-weight: 800; }
+  .rows .src, .rows .en { display: none; }
+  .caption { margin-top: 34px; font-size: 29px; line-height: 1.65; color: rgba(244,247,251,.5); }
+  .caption b.em { color: #6fd3b8; font-weight: 700; }
+
+  .foot {
+    position: absolute; left: 88px; right: 88px; bottom: 52px;
+    display: flex; justify-content: space-between; font-size: 26px; color: rgba(244,247,251,.36);
+  }
+</style>
+</head>
+<body>
+  <div class="head">
+    <div class="kicker">__KICKER__</div>
+    <div class="title">__TITLE__</div>
+  </div>
+  <div class="body">
+    <div class="phone"><img src="__IMG__" alt=""></div>
+    <div class="side">
+      <div class="tag">__TAG__</div>
+      <div class="rows">__ROWS__</div>
+      <div class="caption">__CAPTION__</div>
+    </div>
+  </div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

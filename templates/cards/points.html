@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+  }
+  .wrap { padding: 118px 96px 0; }
+
+  /* 思维名压在色块上 = 全页最大强调 */
+  .tag { margin-bottom: 30px; }
+  .tag .ln { display: block; }
+  .tag b { font-size: 62px; font-weight: 800; line-height: 1.5; }
+  .tag b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); padding: 4px 14px; }
+  .tag b.pale { background: var(--surface-2, #F2EADA); padding: 4px 14px; }
+
+  /* 权威出处：紧跟标题，金色加粗，重点展示 */
+  .cite { margin: 0 0 58px; font-size: 40px; font-weight: 800; color: var(--accent-deep, #A08A5A); letter-spacing: 1px; }
+  .cite .cen { font-size: 30px; font-weight: 600; color: var(--accent-soft, #BEAF85); margin-left: 14px; letter-spacing: 0; }
+
+  /* 正文：常规字重，只有 **重点** 加粗 */
+  .item { margin-bottom: __GAP__; }
+  .item .zh { font-size: __ZH__; font-weight: 400; line-height: 1.6; color: var(--ink, #111); }
+  .item .zh .em { font-weight: 800; }
+  .item .en { margin-top: 12px; font-size: __EN__; font-weight: 400; line-height: 1.5; text-align: left; color: var(--ink-2, #6B6350); }
+  .item .en .em { font-weight: 700; color: var(--ink-2b, #3A3529); }
+
+  .foot {
+    position: absolute;
+    left: 96px;
+    right: 96px;
+    bottom: 62px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 28px;
+    color: var(--ink-3, #9A917C);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="tag">__TITLE__</div>
+    <div class="cite">出处 · __SRC__<span class="cen">__SRCEN__</span></div>
+    __ROWS__
+  </div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

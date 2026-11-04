@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background:
+      radial-gradient(900px 700px at 50% 24%, rgba(244,199,124,.12) 0%, rgba(244,199,124,0) 66%),
+      linear-gradient(168deg, #0a1220 0%, #101927 58%, #0a1220 100%);
+    color: #f4f7fb;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    overflow: hidden; position: relative;
+  }
+  .mark {
+    position: absolute; left: 48px; top: -70px; font-size: 560px; line-height: 1;
+    font-family: Georgia, "Songti SC", serif; color: rgba(244,199,124,.10);
+  }
+  .rule { position: absolute; left: 96px; top: 330px; width: 92px; height: 6px; background: #f4c77c; }
+
+  .wrap { position: absolute; left: 96px; top: 420px; width: 660px; }
+  .tag {
+    display: inline-block; margin-bottom: 22px; font-size: 22px; font-weight: 800; letter-spacing: 1px;
+    color: #14202f; background: #6fd3b8; border-radius: 999px; padding: 8px 18px;
+  }
+  .tag:empty { display: none; }
+  .kicker { font-size: 30px; letter-spacing: 4px; color: #f4c77c; }
+  .title { margin-top: 48px; }
+  .title .ln { display: block; }
+  .title b { font-size: __ZH__; line-height: 1.36; font-weight: 900; letter-spacing: -3px; }
+  .title b.hot { color: #f4f7fb; }
+  .title b.pale { color: #f4c77c; }
+
+  .echo { margin-top: 54px; font-size: __ECHOSIZE__; line-height: 1.7; color: rgba(244,247,251,.58); }
+  .echo b.em { color: #f4f7fb; font-weight: 700; }
+
+  .phone {
+    position: absolute; right: 52px; bottom: 140px; width: 402px; height: 900px;
+    border: 4px solid rgba(244,199,124,.34); border-radius: 54px; overflow: hidden;
+    background: #101927; transform: rotate(-3deg);
+    box-shadow: 0 44px 120px rgba(0,0,0,.72), 0 0 120px rgba(244,199,124,.14);
+  }
+  .phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .phone:has(img[src=""]) { display: none; }
+
+  .foot {
+    position: absolute; left: 96px; right: 96px; bottom: 58px;
+    display: flex; justify-content: space-between; font-size: 26px; color: rgba(244,247,251,.36);
+  }
+</style>
+</head>
+<body>
+  <div class="mark">“</div>
+  <div class="rule"></div>
+  <div class="phone"><img src="__IMG__" alt=""></div>
+  <div class="wrap">
+    <div class="tag">__TAG__</div>
+    <div class="kicker">__KICKER__</div>
+    <div class="title">__TITLE__</div>
+    <div class="echo">__ECHO__</div>
+  </div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

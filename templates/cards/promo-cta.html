@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background:
+      radial-gradient(900px 700px at 50% 14%, rgba(244,199,124,.16) 0%, rgba(244,199,124,0) 66%),
+      radial-gradient(760px 560px at 50% 90%, rgba(111,211,184,.08) 0%, rgba(111,211,184,0) 70%),
+      linear-gradient(165deg, #0a1220 0%, #101927 55%, #0a1220 100%);
+    color: #f4f7fb;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    overflow: hidden; position: relative;
+  }
+  .bgwrap { position: absolute; inset: 0; }
+  .bgwrap:has(img[src=""]) { display: none; }
+  .bg { position: absolute; inset: 0; }
+  .bg img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;
+    filter: blur(9px) saturate(1.06) brightness(.68); transform: scale(1.14); transform-origin: 50% 50%; }
+  .veil { position: absolute; inset: 0;
+    background:
+      radial-gradient(1000px 760px at 50% 30%, rgba(10,18,32,.16) 0%, rgba(10,18,32,.56) 76%),
+      linear-gradient(180deg, rgba(10,18,32,.56) 0%, rgba(10,18,32,.58) 44%, rgba(10,18,32,.9) 80%, #0a1220 100%); }
+
+  .wrap { position: absolute; left: 96px; right: 96px; top: 168px; text-align: center; }
+  .kicker { display: inline-block; font-size: 28px; letter-spacing: 3px; color: #f4c77c;
+    border: 2px solid rgba(244,199,124,.4); border-radius: 999px; padding: 10px 26px; }
+  .title { margin-top: 52px; }
+  .title .ln { display: block; }
+  .title b { font-size: __ZH__; line-height: 1.28; font-weight: 900; letter-spacing: -3px; }
+  .title b.hot { color: #f4f7fb; }
+  .title b.pale { color: #f4c77c; }
+
+  .rows { margin: 56px auto 0; width: fit-content; display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
+  .rows .item { display: flex; align-items: baseline; gap: 16px; }
+  .rows .item::before { content: "✓"; color: #6fd3b8; font-size: 30px; font-weight: 900; }
+  .rows .zh { font-size: 34px; line-height: 1.5; color: rgba(244,247,251,.86); font-weight: 600; }
+  .rows .zh b.em { color: #f4c77c; font-weight: 800; }
+  .rows .src, .rows .en { display: none; }
+
+  .names { position: absolute; left: 96px; right: 96px; top: 760px; text-align: center;
+    font-size: 28px; line-height: 2.1; letter-spacing: 2px; color: rgba(244,247,251,.32); }
+  .names:empty { display: none; }
+
+  .halo { position: absolute; left: 50%; bottom: 150px; width: 920px; height: 560px; transform: translateX(-50%);
+    background: radial-gradient(closest-side, rgba(244,199,124,.16) 0%, rgba(244,199,124,0) 72%); }
+
+  .proof { position: absolute; left: 0; right: 0; bottom: 476px; text-align: center;
+    font-size: 30px; letter-spacing: 1px; color: rgba(244,247,251,.48); }
+  .proof:empty { display: none; }
+  .proof b.em { color: #f4c77c; font-weight: 800; }
+
+  .cta {
+    position: absolute; left: 150px; right: 150px; bottom: 300px;
+    background: linear-gradient(180deg, #f7d493 0%, #f4c77c 100%);
+    color: #14202f; border-radius: 999px; padding: 34px 40px; text-align: center;
+    font-size: 44px; font-weight: 900; letter-spacing: 1px;
+    box-shadow: 0 26px 74px rgba(244,199,124,.28);
+  }
+  .caption { position: absolute; left: 96px; right: 96px; bottom: 226px; text-align: center;
+    font-size: 28px; color: rgba(244,247,251,.5); }
+  .caption b.em { color: rgba(244,247,251,.82); font-weight: 700; }
+
+  .foot {
+    position: absolute; left: 96px; right: 96px; bottom: 54px;
+    display: flex; justify-content: space-between; font-size: 26px; color: rgba(244,247,251,.4);
+  }
+</style>
+</head>
+<body>
+  <div class="bgwrap"><div class="bg"><img src="__IMG__" alt=""></div><div class="veil"></div></div>
+  <div class="halo"></div>
+  <div class="names">__NAMES__</div>
+  <div class="wrap">
+    <div class="kicker">__KICKER__</div>
+    <div class="title">__TITLE__</div>
+    <div class="rows">__ROWS__</div>
+  </div>
+  <div class="proof">__PROOF__</div>
+  <div class="cta">__CTA__</div>
+  <div class="caption">__CAPTION__</div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

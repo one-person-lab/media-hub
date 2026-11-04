@@ -1,0 +1,777 @@
+{
+  "_说明": "模板目录：一条模板 = 一层皮肤 + 三个页面角色各用哪个版式。为什么要有这一层：card-themes.json 只管「皮」，card-layouts.json 只管「结构」，而用户说的「换个模板」是两件事一起换——把这两件拆开让他自己配，等于把设计决策推给一个只想发内容的人。模板是给他按的那颗钮，不是第三种数据：选中后界面把 theme.id 和逐页 layout 写回卡片 json，卡片本身仍是自描述的，渲染器不知道模板这个概念存在（所以老卡片、手改过的卡片都不受这层影响）。",
+  "_字段": "key=写进卡片 json 顶层 template 的值；label=界面显示名；theme=config/card-themes.json 的 key；layouts={cover,body,closing} 三个角色各用 card-layouts.json 里哪个版式（第 1 页=cover、最后 1 页=closing、中间全是 body）；shape=这条模板是为哪种内容形态准备的；intents=这种形态在该意图下才会被推荐；pick=一句话说明它凭什么被选（机制，不是形容词），界面把它当推荐理由原样显示；order=界面顺序，同一形态里排最前的那条就是自动推荐的答案；status=active 可选可推荐 / candidate 一键克隆出来的候选，只能预览不进默认推荐 / archived 不再推荐但历史卡片仍可引用；source=克隆来源（noteId + 源页数），手写的模板没有这个键。",
+  "_用法": "卡片 json 顶层 \"template\": \"mono-list\"。这只记「当初按的是哪条钮」，真正决定渲成什么样的是同层的 theme.id 和逐页 layout——手改其中任何一项，界面就显示成「自定义」而不是继续冒充那个模板。老的 23 份 json 一个字段都不用加：没有 theme 就不注入皮、没有 template 就显示「未选模板」，渲染结果与改造前逐像素相同。",
+  "_分期": "P0 手写的 active 模板。第一批 12 条是从存量卡片里用得最多的那几个版式配出来的；第二批 12 条（order 1–13）不是自己想出来的样式，是照着 content/Inbox/爆款采集/ 里真采到的爆款封面逐条还原的骨架：左上连载编号片 + 顶到边缘的大字压在色块上 + 荧光笔只划过字下半截（poster-marker），状态栏/返回行/日期三样撑出来的仿截图（note-shot），带硬阴影的打勾方框（checklist-mark），歪着贴的便签拼贴（sticky-note），一个数吃掉半屏（stat-poster），整页反色的收尾（closing-strip）。皮也换了五层（番茄奶油/抹茶米白/克莱因蓝/黑金/美拉德棕），全部按「落字的色块只用 --surface-2 或 --accent+--accent-ink」这条配，深色皮不会糊。一键克隆在 P2：它产出的是一条 status=candidate 的记录（同版式 + 从源图采样出来的皮），人确认后才转 active；近重复的不新增，提示「基于现有模板另存」。",
+  "_配额": "maxActive 从 24 提到 48。24 是模板选择器还只是创作台一个弹窗时的限制——一屏四列、六行已经没人往下翻了。现在素材库是一级页面，能筛能逛，容量不该再卡住在架数量；配额留着只为了挡克隆线无节制地往里灌。",
+  "default": "marker-check-tomato",
+  "maxActive": 48,
+  "templates": [
+    {
+      "key": "marker-check-tomato",
+      "label": "番茄荧光·打勾清单",
+      "theme": "tomato-cream",
+      "layouts": {
+        "cover": "poster-marker",
+        "body": "checklist-mark",
+        "closing": "closing-strip"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "编号片起页、大字压色块，正文每行一枚方框一个勾：清单类用它是为了口气，打勾让人先假设「照做就行」，收藏就来自这句",
+      "order": 1,
+      "status": "active"
+    },
+    {
+      "key": "note-points-gold",
+      "label": "黑金截图·观点",
+      "theme": "noir-gold",
+      "layouts": {
+        "cover": "note-shot",
+        "body": "note-shot",
+        "closing": "closing-strip"
+      },
+      "shape": [
+        "观点"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "整页做成一张手机备忘录截图，灰底段落块是最像真的一处；赚钱/认知类爆款几乎全是这层皮，完读率高在它不像排版作品",
+      "order": 2,
+      "status": "active"
+    },
+    {
+      "key": "marker-steps-matcha",
+      "label": "抹茶荧光·步骤",
+      "theme": "matcha",
+      "layouts": {
+        "cover": "poster-marker",
+        "body": "steps",
+        "closing": "closing-strip"
+      },
+      "shape": [
+        "步骤"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "编号时间线把「先做哪步」摆出来，绿米调不抢顺序感；教程类要的是照着做，配色越安静越像说明书",
+      "order": 3,
+      "status": "active"
+    },
+    {
+      "key": "marker-split-klein",
+      "label": "克莱因蓝·测评",
+      "theme": "klein-blue",
+      "layouts": {
+        "cover": "poster-marker",
+        "body": "split",
+        "closing": "closing-strip"
+      },
+      "shape": [
+        "测评"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "左右两栏靠描边分胜负，整页饱和蓝是六套皮里对比最强的一档——双列瀑布流里唯一整张都在喊的缩略图，冲量用，别天天发",
+      "order": 4,
+      "status": "active"
+    },
+    {
+      "key": "mag-quote",
+      "label": "高级杂志·金句",
+      "theme": "magazine",
+      "layouts": {
+        "cover": "cover",
+        "body": "quote",
+        "closing": "closing"
+      },
+      "shape": [
+        "金句"
+      ],
+      "intents": [
+        "value"
+      ],
+      "pick": "衬线大字 + 细线 + 纸色块，编辑感来自克制；金句和人物类用它不掉价",
+      "order": 5,
+      "status": "active"
+    },
+    {
+      "key": "sticky-points-tomato",
+      "label": "番茄便签·要点",
+      "theme": "tomato-cream",
+      "layouts": {
+        "cover": "poster-marker",
+        "body": "sticky-note",
+        "closing": "closing-strip"
+      },
+      "shape": [
+        "观点",
+        "清单"
+      ],
+      "intents": [
+        "value"
+      ],
+      "pick": "双列小卡每张歪一点、底色轮换、硬阴影不带模糊；观感来自「手工贴上去」，信息像被挑出来的，不像被写出来的",
+      "order": 6,
+      "status": "active"
+    },
+    {
+      "key": "note-list-cream",
+      "label": "奶油截图·清单",
+      "theme": "cream-journal",
+      "layouts": {
+        "cover": "note-shot",
+        "body": "checklist-mark",
+        "closing": "closing-strip"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "仿截图起页 + 打勾正文，两个高完读样式接在一起；浅色那版给不想上黑金的号",
+      "order": 7,
+      "status": "active"
+    },
+    {
+      "key": "marker-points-mono",
+      "label": "黑白荧光·观点",
+      "theme": "poster-mono",
+      "layouts": {
+        "cover": "poster-marker",
+        "body": "points",
+        "closing": "closing-strip"
+      },
+      "shape": [
+        "观点"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "大字报那套机制的加强版：编号片 + 顶边大字 + 荧光划过钩子句，黑底白字把「一句一句讲理」撑到最硬",
+      "order": 8,
+      "status": "active"
+    },
+    {
+      "key": "marker-check-klein",
+      "label": "克莱因蓝·打勾清单",
+      "theme": "klein-blue",
+      "layouts": {
+        "cover": "poster-marker",
+        "body": "checklist-mark",
+        "closing": "closing-strip"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value"
+      ],
+      "pick": "与番茄那版同一副骨头，只把底换成整页蓝：避坑、盘点这种要一眼看见的干货用它，代价是看久了累",
+      "order": 9,
+      "status": "active"
+    },
+    {
+      "key": "sticky-list-mag",
+      "label": "杂志便签·清单",
+      "theme": "magazine",
+      "layouts": {
+        "cover": "poster-marker",
+        "body": "sticky-note",
+        "closing": "closing"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value"
+      ],
+      "pick": "便签拼贴配杂志皮：描边变细、字换衬线，同一副骨架从「喊」变成「编」，书评清单这种要挂权威的用它",
+      "order": 10,
+      "status": "active"
+    },
+    {
+      "key": "marker-quote-maillard",
+      "label": "美拉德·金句",
+      "theme": "maillard",
+      "layouts": {
+        "cover": "poster-marker",
+        "body": "quote",
+        "closing": "closing-strip"
+      },
+      "shape": [
+        "金句"
+      ],
+      "intents": [
+        "value"
+      ],
+      "pick": "驼底深棕、整套没有一处高饱和，靠纸感不靠喊；人物与长拆读的金句页用它掉价风险最低",
+      "order": 11,
+      "status": "active"
+    },
+    {
+      "key": "stat-gold",
+      "label": "黑金·数据大字",
+      "theme": "noir-gold",
+      "layouts": {
+        "cover": "poster-marker",
+        "body": "stat-poster",
+        "closing": "closing-strip"
+      },
+      "shape": [
+        "数据"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "一个数吃掉半屏，其余全是它的注脚：钩子来自具体数，「87% 的人」比「很多人」的点击高一档。正文页只认 quote 字段，写成清单的稿子套不上",
+      "order": 12,
+      "status": "active"
+    },
+    {
+      "key": "stat-klein",
+      "label": "克莱因蓝·数据大字",
+      "theme": "klein-blue",
+      "layouts": {
+        "cover": "poster-marker",
+        "body": "stat-poster",
+        "closing": "closing"
+      },
+      "shape": [
+        "数据"
+      ],
+      "intents": [
+        "value"
+      ],
+      "pick": "同副骨头换亮底：数字压成深蓝、说明走白字，适合放在一组的第二页当「所以呢」那一击",
+      "order": 13,
+      "status": "active"
+    },
+    {
+      "key": "mono-list",
+      "label": "大字报·黑白清单",
+      "theme": "poster-mono",
+      "layouts": {
+        "cover": "cover",
+        "body": "items",
+        "closing": "closing"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "缩略图里字就是图，双列瀑布流不糊；干货承诺直接触发收藏",
+      "order": 14,
+      "status": "active"
+    },
+    {
+      "key": "journal-list",
+      "label": "奶油手账·清单",
+      "theme": "cream-journal",
+      "layouts": {
+        "cover": "cover",
+        "body": "items",
+        "closing": "closing"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "现状那一版，亲和但有距离感：奶油调已在退潮，别当默认答案用太久",
+      "order": 15,
+      "status": "active"
+    },
+    {
+      "key": "ink-list",
+      "label": "深色知识卡·清单",
+      "theme": "ink-deep",
+      "layouts": {
+        "cover": "cover",
+        "body": "items",
+        "closing": "closing"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "条目多、中英对照长的清单，深底比奶油底更耐读",
+      "order": 16,
+      "status": "active"
+    },
+    {
+      "key": "solar-list",
+      "label": "大字报·亮黄清单",
+      "theme": "solar-list",
+      "layouts": {
+        "cover": "cover",
+        "body": "items",
+        "closing": "closing"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value"
+      ],
+      "pick": "机制与黑白版同，只把注意力色换成亮黄——留着跟 mono-list 做一次同题对照",
+      "order": 17,
+      "status": "active"
+    },
+    {
+      "key": "mono-points",
+      "label": "大字报·观点",
+      "theme": "poster-mono",
+      "layouts": {
+        "cover": "cover",
+        "body": "points",
+        "closing": "closing"
+      },
+      "shape": [
+        "观点"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "正文常规字重、只加粗关键词，黑底白字把「一句一句讲理」撑住",
+      "order": 18,
+      "status": "active"
+    },
+    {
+      "key": "grey-essay",
+      "label": "格雷系·观点",
+      "theme": "grey-luxe",
+      "layouts": {
+        "cover": "cover",
+        "body": "points",
+        "closing": "closing"
+      },
+      "shape": [
+        "观点"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "低饱和不耐疲劳，观点说得不吆喝；适合要长期发的号而不是单篇冲量",
+      "order": 19,
+      "status": "active"
+    },
+    {
+      "key": "mag-points",
+      "label": "高级杂志·观点",
+      "theme": "magazine",
+      "layouts": {
+        "cover": "cover",
+        "body": "points",
+        "closing": "closing"
+      },
+      "shape": [
+        "观点"
+      ],
+      "intents": [
+        "value"
+      ],
+      "pick": "金色出处位配衬线正文，书评影评这种要挂权威的长拆读",
+      "order": 20,
+      "status": "active"
+    },
+    {
+      "key": "grey-steps",
+      "label": "格雷系·步骤",
+      "theme": "grey-luxe",
+      "layouts": {
+        "cover": "cover",
+        "body": "steps",
+        "closing": "closing"
+      },
+      "shape": [
+        "步骤"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "编号时间线让「先做哪步」看得见，格雷底不抢字的顺序感",
+      "order": 21,
+      "status": "active"
+    },
+    {
+      "key": "ink-steps",
+      "label": "深色知识卡·步骤",
+      "theme": "ink-deep",
+      "layouts": {
+        "cover": "cover",
+        "body": "steps",
+        "closing": "closing"
+      },
+      "shape": [
+        "步骤"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "深色底 + 紫金阶，信息密度高的教程在手机上不刺眼",
+      "order": 22,
+      "status": "active"
+    },
+    {
+      "key": "grey-split",
+      "label": "格雷系·测评",
+      "theme": "grey-luxe",
+      "layouts": {
+        "cover": "cover",
+        "body": "split",
+        "closing": "closing"
+      },
+      "shape": [
+        "测评"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "同样左右分栏，结论靠克制说出来；方法论类的测评用它",
+      "order": 23,
+      "status": "active"
+    },
+    {
+      "key": "mono-split",
+      "label": "大字报·测评",
+      "theme": "poster-mono",
+      "layouts": {
+        "cover": "cover",
+        "body": "split",
+        "closing": "closing"
+      },
+      "shape": [
+        "测评"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "左右两栏的对比靠描边分胜负，黑白底把「选哪个」这件事说到最硬",
+      "order": 24,
+      "status": "active"
+    },
+    {
+      "key": "clone-ce169c10-points",
+      "label": "内耗爆款皮·观点",
+      "theme": "clone-ce169c10",
+      "layouts": {
+        "cover": "cover",
+        "body": "points",
+        "closing": "closing"
+      },
+      "shape": [
+        "观点"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "整层皮从参考图取：底色 #F3EDDA、字 #000000、强调 #CC574B",
+      "order": 912,
+      "status": "candidate",
+      "source": {
+        "title": "neihao-page-02"
+      }
+    },
+    {
+      "key": "clone-3fecfdcf-items",
+      "label": "素白红·清单",
+      "theme": "clone-3fecfdcf",
+      "layouts": {
+        "cover": "cover",
+        "body": "items",
+        "closing": "closing"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "整层皮从参考图取：底色 #FFFEFE、字 #5C4A54、强调 #FECDD2",
+      "order": 934,
+      "status": "active",
+      "source": {
+        "platform": "小红书",
+        "noteId": "6a7c2bfd0000000025005db8",
+        "title": "纯属个人观点",
+        "url": "https://www.xiaohongshu.com/explore/6a7c2bfd0000000025005db8",
+        "likes": "164450",
+        "collects": "",
+        "comments": "",
+        "heat": 164450
+      }
+    },
+    {
+      "key": "clone-f3800bca-items",
+      "label": "奶油底·清单",
+      "theme": "clone-f3800bca",
+      "layouts": {
+        "cover": "cover",
+        "body": "items",
+        "closing": "closing"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "参考图的皮跟现有皮肤是同一条，只把版式搬过来（封面 / 清单 / 收尾）",
+      "order": 935,
+      "status": "active",
+      "source": {
+        "platform": "小红书",
+        "noteId": "6abf6bbe000000001403abc1",
+        "title": "人可以争气到什么程度，请疯狂激励我",
+        "url": "https://www.xiaohongshu.com/explore/6abf6bbe000000001403abc1",
+        "likes": "97025",
+        "collects": "",
+        "comments": "",
+        "heat": 97025
+      }
+    },
+    {
+      "key": "clone-22dc4a22-items",
+      "label": "深底黄·清单",
+      "theme": "clone-22dc4a22",
+      "layouts": {
+        "cover": "cover",
+        "body": "items",
+        "closing": "closing"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "整层皮从参考图取：底色 #010101、字 #FDFDE1、强调 #CCCA6F",
+      "order": 936,
+      "status": "active",
+      "source": {
+        "platform": "小红书",
+        "noteId": "6a99b5bf0000000026018c62",
+        "title": "突然被这段话给点醒了～",
+        "url": "https://www.xiaohongshu.com/explore/6a99b5bf0000000026018c62",
+        "likes": "73451",
+        "collects": "",
+        "comments": "",
+        "heat": 73451
+      }
+    },
+    {
+      "key": "clone-ecfbcc09-split",
+      "label": "重彩底黄·测评",
+      "theme": "clone-ecfbcc09",
+      "layouts": {
+        "cover": "cover",
+        "body": "split",
+        "closing": "closing"
+      },
+      "shape": [
+        "测评"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "整层皮从参考图取：底色 #D5EBF2、字 #010201、强调 #BE9C51",
+      "order": 937,
+      "status": "active",
+      "source": {
+        "platform": "小红书",
+        "noteId": "6abe328f000000001b01de25",
+        "title": "突然被这段话给点醒了～",
+        "url": "https://www.xiaohongshu.com/explore/6abe328f000000001b01de25",
+        "likes": "72197",
+        "collects": "",
+        "comments": "",
+        "heat": 72197
+      }
+    },
+    {
+      "key": "clone-2f96e0cd-items",
+      "label": "重彩底红·清单",
+      "theme": "clone-2f96e0cd",
+      "layouts": {
+        "cover": "cover",
+        "body": "items",
+        "closing": "closing"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "整层皮从参考图取：底色 #CCF6F3、字 #3B454B、强调 #C7B8FE",
+      "order": 938,
+      "status": "active",
+      "source": {
+        "platform": "小红书",
+        "noteId": "6a977524000000002802df1e",
+        "title": "但是话又说回来了",
+        "url": "https://www.xiaohongshu.com/explore/6a977524000000002802df1e",
+        "likes": "72074",
+        "collects": "",
+        "comments": "",
+        "heat": 72074
+      }
+    },
+    {
+      "key": "clone-56130cca-split",
+      "label": "素白橙·测评",
+      "theme": "clone-56130cca",
+      "layouts": {
+        "cover": "cover",
+        "body": "split",
+        "closing": "closing"
+      },
+      "shape": [
+        "测评"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "整层皮从参考图取：底色 #FFFFFF、字 #3B3B3B、强调 #F0CCB2",
+      "order": 939,
+      "status": "active",
+      "source": {
+        "platform": "小红书",
+        "noteId": "6a60c14c0000000002003c00",
+        "title": "原来大家有这么多时间管理的焚诀",
+        "url": "https://www.xiaohongshu.com/explore/6a60c14c0000000002003c00",
+        "likes": "65974",
+        "collects": "",
+        "comments": "",
+        "heat": 65974
+      }
+    },
+    {
+      "key": "clone-c20bd639-items",
+      "label": "奶油底橙·清单",
+      "theme": "clone-c20bd639",
+      "layouts": {
+        "cover": "cover",
+        "body": "items",
+        "closing": "closing"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "整层皮从参考图取：底色 #ECE7DB、字 #1A150C、强调 #E1522D",
+      "order": 940,
+      "status": "active",
+      "source": {
+        "platform": "小红书",
+        "noteId": "6ad971240000000033028cc5",
+        "title": "落后同龄人5年？半年就能追回来",
+        "url": "https://www.xiaohongshu.com/explore/6ad971240000000033028cc5",
+        "likes": "64690",
+        "collects": "",
+        "comments": "",
+        "heat": 64690
+      }
+    },
+    {
+      "key": "clone-7377765c-items",
+      "label": "深底红·清单",
+      "theme": "clone-7377765c",
+      "layouts": {
+        "cover": "cover",
+        "body": "items",
+        "closing": "closing"
+      },
+      "shape": [
+        "清单"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "整层皮从参考图取：底色 #5E6160、字 #FDFDFD、强调 #A8D6ED",
+      "order": 941,
+      "status": "active",
+      "source": {
+        "platform": "小红书",
+        "noteId": "6ad3568d0000000015003637",
+        "title": "全民进入大抗炎时代",
+        "url": "https://www.xiaohongshu.com/explore/6ad3568d0000000015003637",
+        "likes": "59545",
+        "collects": "",
+        "comments": "",
+        "heat": 59545
+      }
+    },
+    {
+      "key": "clone-f2124ac3-split",
+      "label": "奶油底橙·测评",
+      "theme": "clone-f2124ac3",
+      "layouts": {
+        "cover": "cover",
+        "body": "split",
+        "closing": "closing"
+      },
+      "shape": [
+        "测评"
+      ],
+      "intents": [
+        "value",
+        "mixed"
+      ],
+      "pick": "整层皮从参考图取：底色 #EBE7FA、字 #1A191E、强调 #FAB547",
+      "order": 942,
+      "status": "active",
+      "source": {
+        "platform": "小红书",
+        "noteId": "6aa9378c000000001103beee",
+        "title": "整理一下之前收藏的有意思的帖子",
+        "url": "https://www.xiaohongshu.com/explore/6aa9378c000000001103beee",
+        "likes": "56152",
+        "collects": "",
+        "comments": "",
+        "heat": 56152
+      }
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+  }
+  /* 顶部奶油横幅：源笔记封面同款 */
+  .band { height: 208px; background: var(--surface, #FAF3E3); }
+  .wrap { padding: 96px 96px 0; }
+
+  /* 标题压在色块上，上下各一条黑线 */
+  .titleblock { border-top: var(--rule-w, 5px) solid var(--rule, #111); border-bottom: var(--rule-w, 5px) solid var(--rule, #111); padding: 22px 0 26px; }
+  .titleblock .ln { display: block; margin-bottom: 10px; }
+  .titleblock .ln:last-child { margin-bottom: 0; }
+  .titleblock b {
+    display: inline-block;
+    font-size: 112px;
+    font-weight: 800;
+    line-height: 1.24;
+    letter-spacing: 2px;
+    padding: 2px 14px;
+  }
+  /* 色块上的字必须跟着 accent 走：--accent-ink 是 Material 的 on<base> 规则，
+     深色 accent（大字报的黑块）不配浅色字就会糊成一片 */
+  .titleblock b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); }
+  .titleblock b.pale { background: var(--surface-2, #F2EADA); }
+
+  .echo { margin-top: 62px; font-size: __ECHOSIZE__; font-weight: 500; color: var(--ink, #111); line-height: 1.4; }
+  /* echo 里包 **…** 的那段压黄块，用来把钩子句顶出来 */
+  .echo b.em { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); font-weight: 700; padding: 4px 12px; }
+
+  /* 条目：中文带出处，下面英文对照（英文行数少，左对齐避免字间距被拉开） */
+  .item { margin-top: __GAP__; }
+  .item .zh { font-size: __ZH__; font-weight: 700; line-height: 1.5; }
+  .item .zh .src { font-weight: 500; }
+  .item .en {
+    margin-top: 22px;
+    font-size: __EN__;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
+    color: var(--ink, #111);
+  }
+</style>
+</head>
+<body>
+  <div class="band"></div>
+  <div class="wrap">
+    <div class="titleblock">__TITLE__</div>
+    <div class="echo">__ECHO__</div>
+    __ROWS__
+  </div>
+</body>
+</html>

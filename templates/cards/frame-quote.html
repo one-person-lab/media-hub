@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+  }
+
+  /* 一整圈粗框，框内再留 8px 细线，做成书封 */
+  .frame {
+    position: absolute;
+    inset: 74px;
+    border: var(--rule-w, 5px) solid var(--rule, #111);
+    padding: 84px 78px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .frame::after {
+    content: "";
+    position: absolute;
+    inset: 16px;
+    border: 1px solid var(--surface-2, #F2EADA);
+    pointer-events: none;
+  }
+
+  .mark {
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 220px;
+    line-height: .6;
+    color: var(--accent-deep, #A08A5A);
+    height: 120px;
+  }
+
+  .q {
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 104px;
+    font-weight: 700;
+    line-height: 1.34;
+    letter-spacing: -.01em;
+  }
+  .q .hl {
+    color: var(--accent-ink, #111);
+    background: var(--accent, #FAE79B);
+    padding: 0 14px;
+  }
+
+  .qen {
+    margin-top: 44px;
+    font-size: 34px;
+    line-height: 1.55;
+    letter-spacing: .01em;
+    color: var(--ink-2, #6B6350);
+    max-width: 880px;
+  }
+  .qen:empty { display: none; }
+
+  .by {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-top: 30px;
+    border-top: 1px solid var(--surface-2, #F2EADA);
+    font-size: 27px;
+    letter-spacing: .18em;
+    color: var(--ink-3, #9A917C);
+  }
+  .by .who { color: var(--ink, #111); font-weight: 600; }
+  .role { margin-left: 20px; letter-spacing: .1em; }
+  .role:empty { display: none; }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <div class="mark">&ldquo;</div>
+    <div>
+      <div class="q">__QUOTE__</div>
+      <div class="qen">__QUOTE_EN__</div>
+    </div>
+    <div class="by"><span><span class="who">__WHO__</span>__ROLE__</span><span>__PAGENO__</span></div>
+  </div>
+</body>
+</html>

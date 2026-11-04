@@ -1,0 +1,13 @@
+{
+  "_说明": "桌面版自己的排班：app 开着才跑，不做系统启动项。at 是本机时间，到点后加 0~jitterMin 的抖动（同一天不挪点）；graceMin 是浏览器被别的任务占着时允许重试多久，超了就如实记「今天没排进去」；cooldownMin 是两趟之间至少歇多久（欠了几趟也不在一个晚上连着撞同一批后台）。删掉 jobs 里的某一行等于关掉那趟定时。",
+  "_口径": "六趟各自错峰：21:47 那一趟在固定发文时间 22:00 之前，当晚发出去的内容由次日 08:42 的回认认账（判据与 config/cron/ 那四份定义一致，收藏搬运是桌面版新加的一趟，22:40 那趟把这台机器写过的内容拍成快照推到云端）。跑没跑成记在 metrics/auto-run.json。",
+  "cooldownMin": 12,
+  "jobs": [
+    { "name": "爆款采集", "task": "viral", "at": "07:40", "jitterMin": 25, "graceMin": 120 },
+    { "name": "发布状态晨间补检", "task": "publish-check", "at": "08:42", "jitterMin": 20, "graceMin": 120 },
+    { "name": "对标账号采集", "task": "benchmark", "at": "09:05", "jitterMin": 20, "graceMin": 120 },
+    { "name": "平台数据每日采集", "task": "collect", "at": "21:47", "jitterMin": 20, "graceMin": 120 },
+    { "name": "收藏搬运", "task": "favorites", "at": "22:10", "jitterMin": 10, "graceMin": 120 },
+    { "name": "内容云端备份", "task": "backup", "at": "22:40", "jitterMin": 15, "graceMin": 120 }
+  ]
+}

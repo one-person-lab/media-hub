@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--ink, #111);
+    color: var(--page, #FFFDF8);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 收尾页整页反色：前面几页是内容，这一页是「记住这个号」。
+     反色是这套里最强的收尾信号，也是唯一一处允许出现行动位的地方。
+     底下留出行动条的高度（210 + 条本身 130），中间那截空由 lines 组自己摊。 */
+  .wrap { padding: 130px 96px 400px; flex: 1 1 auto; display: flex; flex-direction: column; }
+
+  .kicker:empty { display: none; }
+  .kicker {
+    align-self: flex-start;
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: var(--accent, #FAE79B);
+    margin-bottom: 46px;
+  }
+
+  .head { font-size: 118px; font-weight: 900; line-height: 1.2; letter-spacing: 2px; }
+  .head b { display: inline-block; padding: 0 12px; }
+  .head b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); }
+  .head b.pale { background: var(--surface-2, #F2EADA); color: var(--ink, #111); }
+
+  /* 两三条收尾语居中在标题与行动条之间：靠顶部排会留下脚底一大片黑，
+     居中才像「说完这句就走」。 */
+  .lines { margin-top: 96px; flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center; }
+  .line {
+    position: relative;
+    padding-left: 56px;
+    margin-bottom: 46px;
+    font-size: 52px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .line:last-child { margin-bottom: 0; }
+  .line .em { font-weight: 800; }
+  .line::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 30px;
+    width: 26px;
+    height: 26px;
+    background: var(--accent, #FAE79B);
+  }
+  /* 这页的底是 --ink、字是 --page，所以弱化只能靠透明度：
+     拿 --ink-2 那类为浅底设计的次级字色上来，在反色页上会淡到看不见 */
+  .line .src { font-weight: 400; opacity: .66; }
+
+  /* 行动条压在页面下缘：它是这一页唯一的按钮状物体，别的地方不许再出现第二个 */
+  .cta:empty { display: none; }
+  .cta {
+    position: absolute;
+    left: 96px;
+    right: 96px;
+    bottom: 210px;
+    background: var(--accent, #FAE79B);
+    color: var(--accent-ink, #111);
+    font-size: 56px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    line-height: 1.35;
+    padding: 34px 40px;
+    text-align: center;
+  }
+
+  .foot {
+    position: absolute;
+    left: 96px;
+    right: 96px;
+    bottom: 84px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 32px;
+    color: var(--page, #FFFDF8);
+    opacity: .62;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="kicker">__KICKER__</div>
+    <div class="head">__HEAD__</div>
+    <div class="lines">__ROWS__</div>
+  </div>
+  <div class="cta">__CTA__</div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

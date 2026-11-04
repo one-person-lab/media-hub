@@ -1,0 +1,8 @@
+{
+  "_说明": "「我的收藏」搬运的口径。收藏是当时的你已经判过一次「值得看」，所以不再设点赞门槛，只设两道闸：自己的笔记不搬、已入库的不重复搬。复制成 config/favorites.json 再用。",
+  "_xiaohongshuUserId": "自己主页地址里的 24 位 id（https://www.xiaohongshu.com/user/profile/<id>）。换号只改这里。",
+  "xiaohongshuUserId": "把你自己的 24 位 id 填进来",
+  "_maxScrollRounds": "收藏列表是滚动懒加载，最多翻几页就停。按你的收藏条数给个够用的数就行。",
+  "maxScrollRounds": 30,
+  "platforms": ["xiaohongshu", "douyin"]
+}

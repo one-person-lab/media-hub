@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background:
+      radial-gradient(980px 720px at 82% 16%, rgba(244,199,124,.18) 0%, rgba(244,199,124,0) 64%),
+      radial-gradient(760px 620px at 6% 92%, rgba(111,211,184,.10) 0%, rgba(111,211,184,0) 70%),
+      linear-gradient(160deg, #0a1220 0%, #101927 52%, #0a1220 100%);
+    color: #f4f7fb;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    overflow: hidden; position: relative;
+  }
+  .glow { position: absolute; right: -120px; bottom: -80px; width: 820px; height: 820px;
+    background: radial-gradient(circle, rgba(244,199,124,.14) 0%, rgba(244,199,124,0) 64%); }
+
+  .wrap { position: absolute; left: 88px; top: 108px; width: 690px; }
+  .kicker {
+    display: inline-block; font-size: 28px; letter-spacing: 3px; color: #f4c77c;
+    border: 2px solid rgba(244,199,124,.42); border-radius: 999px; padding: 10px 26px;
+  }
+  .title { margin-top: 48px; }
+  .title .ln { display: block; }
+  .title b { font-size: __ZH__; line-height: 1.24; font-weight: 900; letter-spacing: -2px; }
+  .title b.hot { color: #f4f7fb; }
+  .title b.pale { color: #f4c77c; }
+  .echo { margin-top: 34px; max-width: 606px; font-size: __ECHOSIZE__; line-height: 1.62; color: rgba(244,247,251,.66); }
+  .echo b.em { color: #f4f7fb; font-weight: 700; }
+
+  .chips { margin-top: 46px; display: flex; flex-direction: column; gap: 18px; max-width: 606px; }
+  .chips .item { display: flex; align-items: center; gap: 14px; }
+  .chips .item::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #6fd3b8; }
+  .chips .zh {
+    font-size: 29px; color: rgba(244,247,251,.86); background: rgba(255,255,255,.06);
+    border: 2px solid rgba(255,255,255,.10); border-radius: 14px; padding: 12px 22px;
+  }
+  .chips .src, .chips .en { display: none; }
+
+  .stage { position: absolute; right: 66px; bottom: 150px; width: 462px; height: 986px; }
+  .tag {
+    position: absolute; left: 0; top: -46px; font-size: 22px; font-weight: 800; letter-spacing: 1px;
+    color: #14202f; background: #6fd3b8; border-radius: 999px; padding: 8px 18px;
+  }
+  .tag:empty { display: none; }
+  .phone {
+    width: 462px; height: 1000px;
+    border: 5px solid rgba(244,199,124,.46); border-radius: 62px; overflow: hidden;
+    background: #101927; transform: rotate(-4deg);
+    box-shadow: 0 50px 130px rgba(0,0,0,.78), 0 0 150px rgba(244,199,124,.20);
+  }
+  .phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+
+  /* 贴纸：24 题 / 约 5 分钟 —— 爆款产品图常见的圆形角标 */
+  .sticker {
+    position: absolute; right: -38px; top: 18px; width: 196px; height: 196px; border-radius: 50%;
+    background: #f4c77c; color: #14202f; transform: rotate(10deg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    box-shadow: 0 20px 46px rgba(0,0,0,.45);
+  }
+  .sticker .big { font-size: 52px; font-weight: 900; letter-spacing: -1px; line-height: 1; }
+  .sticker .small { margin-top: 8px; font-size: 21px; font-weight: 700; }
+
+  .foot {
+    position: absolute; left: 88px; right: 88px; bottom: 52px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 26px; color: rgba(244,247,251,.38);
+  }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="stage">
+    <div class="tag">__TAG__</div>
+    <div class="phone"><img src="__IMG__" alt=""></div>
+    <div class="sticker"><span class="big">24 题</span><span class="small">约 5 分钟</span></div>
+  </div>
+  <div class="wrap">
+    <div class="kicker">__KICKER__</div>
+    <div class="title">__TITLE__</div>
+    <div class="echo">__ECHO__</div>
+    <div class="chips">__ROWS__</div>
+  </div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

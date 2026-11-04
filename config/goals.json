@@ -1,0 +1,33 @@
+{
+  "_说明": "「今日」页目标卡的三读数。换指标或改目标值只改这个文件。target 为 null = 观察值（只记录不判达成）；manual 字段 = 从 metrics/revenue.json 手工取数。id 固定三个：views / followers / revenue。",
+  "goals": [
+    {
+      "id": "views",
+      "label": "全平台播放量",
+      "window": "近 7 日滚动",
+      "target": 1000,
+      "sources": [
+        { "platform": "xiaohongshu", "metric": "观看数" },
+        { "platform": "douyin", "metric": "播放量" }
+      ]
+    },
+    {
+      "id": "followers",
+      "label": "全平台净涨粉",
+      "window": "近 7 日滚动",
+      "target": 10,
+      "sources": [
+        { "platform": "xiaohongshu", "metric": "净涨粉" },
+        { "platform": "douyin", "metric": "粉丝净增" }
+      ]
+    },
+    {
+      "id": "revenue",
+      "label": "变现收入",
+      "window": "本月",
+      "target": null,
+      "manual": "revenue",
+      "unit": "元"
+    }
+  ]
+}

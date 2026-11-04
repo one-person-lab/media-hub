@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+  }
+  /* 清单页最忌「上半页挤、下半页空」。让条目组撑满剩余高度、
+     靠 space-between 摊开，条目少的时候空隙匀进每一行之间，而不是全堆在脚底。 */
+  .wrap { padding: 108px 84px 150px; display: flex; flex-direction: column; min-height: 1660px; }
+  .points:empty { display: none; }
+  .points { flex: 1 1 auto; display: flex; flex-direction: column; gap: 34px; justify-content: space-between; }
+
+  /* 页首那句判断压在色块上，占满宽度——勾选清单的第一眼要给出「照做就行」的口气 */
+  .tag:empty { display: none; }
+  .tag { margin-bottom: 74px; }
+  .tag .ln { display: block; }
+  .tag b {
+    display: inline-block;
+    font-size: 76px;
+    font-weight: 900;
+    line-height: 1.3;
+    letter-spacing: 1px;
+    padding: 4px 18px;
+  }
+  .tag b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); }
+  .tag b.pale { background: var(--surface-2, #F2EADA); }
+
+  /* 勾是画的：一个方块 + 一条折过来的两笔。
+     打勾这一动作本身在骗多巴胺，清单类内容用它的稿子完读比纯文字高。 */
+  .item {
+    position: relative;
+    padding-left: 132px;
+    border-bottom: var(--rule-w, 5px) solid var(--rule, #111);
+    padding-bottom: 44px;
+  }
+  .item:last-child { border-bottom: 0; }
+  .item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 84px;
+    height: 84px;
+    border: 6px solid var(--rule, #111);
+    background: var(--surface-2, #F2EADA);
+    box-shadow: 8px 8px 0 var(--accent, #FAE79B);
+  }
+  /* 勾的字色跟 --ink 走，不跟 --accent-ink：深色皮的 accent-ink 可能和这块底同明度 */
+  .item::after {
+    content: "";
+    position: absolute;
+    left: 22px;
+    top: 26px;
+    width: 40px;
+    height: 20px;
+    border-left: 10px solid var(--ink, #111);
+    border-bottom: 10px solid var(--ink, #111);
+    transform: rotate(-45deg);
+  }
+
+  .item .zh { font-size: 52px; font-weight: 700; line-height: 1.42; letter-spacing: 0.5px; }
+  .item .zh .em { font-weight: 900; }
+  .item .zh .src { font-weight: 500; color: var(--ink-4, #7C7360); }
+  .item .en { margin-top: 12px; font-size: 36px; font-weight: 400; line-height: 1.45; color: var(--ink-2, #6B6350); }
+
+  .foot {
+    position: absolute;
+    left: 84px;
+    right: 84px;
+    bottom: 58px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 30px;
+    color: var(--ink-3, #9A917C);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="tag">__TITLE__</div>
+    <div class="points">__ROWS__</div>
+  </div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

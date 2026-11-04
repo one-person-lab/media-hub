@@ -1,0 +1,20 @@
+{
+  "_说明": "对标账号（自动线）的口径示例。改关键词/门槛/条数只动这个文件，脚本不硬编码。",
+  "_怎么选": "先在每个平台按 keywords 找人、聚成候选池，再逐个访问主页取实测数据，按 粉丝量(45%) × 近期爆款(35%) × 活跃度(20%) 打分，过门槛后每平台各取 Top dailyLimitPerPlatform 个建档。",
+  "_找法差异": "两平台走同一条路：搜作品 → 把命中的作者聚成候选池。别用平台的「用户」搜索 tab——它按语义匹配关键词，捞进来的是不相干的跑题大号；「发过这个题材的作品」才算同赛道。门槛是同一套口径，不分平台放宽。",
+  "_visitLimit": "每平台最多打开多少个主页。够数就提前收工——少开一个页面就少一分风控暴露。",
+  "_avatarRefillLimit": "每平台每轮最多给多少个老档案补头像（只补 frontmatter 里 avatar 为空的，补满就不再访问）。头像落 public/benchmarks/，界面不引平台外链。",
+  "platforms": ["xiaohongshu", "douyin"],
+  "keywords": [
+    "示例赛道词 A",
+    "示例赛道词 B",
+    "示例赛道词 C"
+  ],
+  "visitLimit": 18,
+  "dailyLimitPerPlatform": 5,
+  "minFollowers": 20000,
+  "maxInactiveDays": 45,
+  "minRecentTopLikes": 1000,
+  "noteSample": 30,
+  "scrollRounds": 2
+}

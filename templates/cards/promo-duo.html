@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background:
+      radial-gradient(980px 680px at 84% 0%, rgba(244,199,124,.12) 0%, rgba(244,199,124,0) 64%),
+      radial-gradient(760px 620px at 4% 82%, rgba(111,211,184,.08) 0%, rgba(111,211,184,0) 70%),
+      linear-gradient(160deg, #0a1220 0%, #101927 56%, #0a1220 100%);
+    color: #f4f7fb;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    overflow: hidden; position: relative;
+  }
+
+  .head { position: absolute; left: 88px; right: 88px; top: 92px; text-align: center; }
+  .kicker { font-size: 28px; letter-spacing: 3px; color: #f4c77c; }
+  .title { margin-top: 18px; }
+  .title .ln { display: block; }
+  .title b { font-size: __ZH__; line-height: 1.26; font-weight: 900; letter-spacing: -2px; }
+  .title b.hot { color: #f4f7fb; }
+  .title b.pale { color: #f4c77c; }
+
+  .stage { position: absolute; left: 88px; right: 88px; top: __GAP__; display: flex; justify-content: center; gap: 48px; }
+  .tag {
+    position: absolute; left: 50%; top: 334px; transform: translateX(-50%);
+    font-size: 22px; font-weight: 800; letter-spacing: 1px;
+    color: #14202f; background: #6fd3b8; border-radius: 999px; padding: 8px 18px;
+  }
+  .tag:empty { display: none; }
+  .shot { width: 424px; }
+  .shot + .shot { margin-top: 40px; }
+  .phone {
+    width: 424px; height: 906px;
+    border: 5px solid rgba(244,199,124,.40); border-radius: 54px; overflow: hidden; background: #101927;
+    box-shadow: 0 42px 104px rgba(0,0,0,.74), 0 0 110px rgba(244,199,124,.14);
+  }
+  .shot:first-child .phone { transform: rotate(-2.2deg); }
+  .shot:last-child .phone { transform: rotate(2.2deg); border-color: rgba(111,211,184,.40); box-shadow: 0 42px 104px rgba(0,0,0,.74), 0 0 110px rgba(111,211,184,.12); }
+  .phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+
+  .caps { position: absolute; left: 88px; right: 88px; bottom: 150px; display: flex; gap: 48px; }
+  .caps .item { flex: 1 1 0; text-align: center; }
+  .caps .zh { font-size: 33px; line-height: 1.5; font-weight: 800; color: #f4f7fb; }
+  .caps .zh b.em { color: #f4c77c; font-weight: 900; }
+  .caps .src, .caps .en { display: none; }
+  .caption { position: absolute; left: 88px; right: 88px; bottom: 92px; text-align: center;
+    font-size: 28px; color: rgba(244,247,251,.46); }
+  .caption b.em { color: #f4f7fb; font-weight: 700; }
+
+  .foot {
+    position: absolute; left: 88px; right: 88px; bottom: 48px;
+    display: flex; justify-content: space-between; font-size: 26px; color: rgba(244,247,251,.36);
+  }
+</style>
+</head>
+<body>
+  <div class="head">
+    <div class="kicker">__KICKER__</div>
+    <div class="title">__TITLE__</div>
+  </div>
+  <div class="tag">__TAG__</div>
+  <div class="stage">
+    <div class="shot"><div class="phone"><img src="__IMG__" alt=""></div></div>
+    <div class="shot"><div class="phone"><img src="__IMG2__" alt=""></div></div>
+  </div>
+  <div class="caps">__ROWS__</div>
+  <div class="caption">__CAPTION__</div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

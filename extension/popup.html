@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    /* 工作台当前风格（pro 主题）：白卡细边、8px 控件、单一强调色。
+       插件弹窗读不到工作台的 data-theme，所以跟随系统深浅，取同一组色值。 */
+    :root {
+      color-scheme: light dark;
+      --surface: #ffffff;
+      --surface-2: #f2f2f2;
+      --line: #e6e6e6;
+      --line-strong: #d4d4d4;
+      --ink: #171717;
+      --ink-2: #4f4f4f;
+      --ink-3: #6d6d6d;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-ink: #ffffff;
+      --danger-text: #b4232a;
+      --danger-soft: #fdecec;
+      --success-text: #15803d;
+      --success-soft: #e9f6ee;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --surface: #17171d;
+        --surface-2: #1e1e26;
+        --line: #2b2b35;
+        --line-strong: #3a3a46;
+        --ink: #ececf1;
+        --ink-2: #b0b0ba;
+        --ink-3: #8a8a96;
+        --accent: #8f87e8;
+        --accent-hover: #afa9ec;
+        --accent-ink: #ffffff;
+        --danger-text: #f87171;
+        --danger-soft: #2a1a1e;
+        --success-text: #4ade80;
+        --success-soft: #16281e;
+      }
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 320px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      font-size: 14px;
+      font-synthesis-weight: none;
+      background: var(--surface);
+      color: var(--ink);
+    }
+    svg { display: block; flex: none; }
+
+    .head { display: flex; align-items: center; gap: 10px; padding: 14px 14px 12px; }
+    .logo { width: 30px; height: 30px; flex: none; border-radius: 7px; overflow: hidden; }
+    .logo img { width: 100%; height: 100%; display: block; }
+    .head h1 { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+    .head p { display: flex; align-items: center; gap: 5px; font-size: 12px; line-height: 1.2; color: var(--ink-3); margin-top: 2px; }
+    .head p.ok { color: var(--success-text); }
+    .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex: none; }
+
+    .body { display: flex; flex-direction: column; gap: 10px; padding: 0 14px 14px; }
+    .target {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      border: 1px solid var(--line); border-radius: 8px;
+      background: var(--surface-2); padding: 8px 10px;
+      font-size: 12px; color: var(--ink-2);
+    }
+    .target > span:first-child { display: flex; align-items: center; gap: 6px; font-weight: 500; }
+    .target > span:last-child { font-family: 'Geist Mono', ui-monospace, Menlo, monospace; font-size: 11px; color: var(--ink-3); }
+
+    #collectBtn {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      width: 100%; height: 40px;
+      border: 1px solid var(--accent); border-radius: 8px;
+      background: var(--accent); color: var(--accent-ink);
+      font: inherit; font-size: 14px; font-weight: 500;
+      cursor: pointer; transition: background 0.12s ease, border-color 0.12s ease;
+    }
+    #collectBtn:hover:not(:disabled) { background: var(--accent-hover); border-color: var(--accent-hover); }
+    #collectBtn:disabled { background: var(--surface-2); border-color: var(--line); color: var(--ink-3); cursor: not-allowed; }
+    #collectBtn.done { background: var(--success-soft); border-color: var(--line); color: var(--success-text); cursor: default; }
+
+    #status {
+      display: none; border: 1px solid var(--line); border-radius: 8px;
+      background: var(--surface-2); padding: 9px 11px;
+      font-size: 12px; line-height: 1.65; color: var(--ink-2);
+      white-space: pre-line; word-break: break-all;
+    }
+    #status.ok    { background: var(--success-soft); color: var(--success-text); }
+    #status.error { background: var(--danger-soft); color: var(--danger-text); }
+
+    .foot {
+      display: flex; justify-content: space-between; gap: 8px;
+      border-top: 1px solid var(--line); padding: 9px 14px;
+      font-size: 11px; color: var(--ink-3);
+    }
+  </style>
+</head>
+<body>
+  <div class="head">
+    <div class="logo" title="创作者增长平台">
+      <!-- 品牌符号「点阵 M」：与工作台 public/favicon.svg 同源，图形见 icons/icon.svg -->
+      <img src="icons/icon.svg" alt="" />
+    </div>
+    <div>
+      <h1>一键采集 · 小红书 / 抖音</h1>
+      <p id="pageState">正在检查页面…</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="target">
+      <span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+        写入 · 采集笔记
+      </span>
+      <span id="targetHost">localhost:5173</span>
+    </div>
+    <button id="collectBtn" disabled>
+      <svg id="btnIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      <span id="btnLabel">采集当前笔记</span>
+    </button>
+    <div id="status"></div>
+  </div>
+  <div class="foot">
+    <span>只采集当前这一条</span>
+    <span>需工作台在本机运行</span>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

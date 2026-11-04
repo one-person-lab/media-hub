@@ -1,0 +1,104 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+# 演示站那份静态快照（scripts/build-demo-data.mjs 现造，别把 26M 图片提交进仓）
+dist-demo
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 构建产物：由 npm run gen:data (predev/prebuild) 生成，不入库
+src/data/generated.json
+
+# 项目级 agent 资产：私有方法论 / 领域约定，不进导出、不进公开仓
+.workbuddy
+
+# 本机授权凭证面：真实账号映射与能力清单，只留本机，绝不入库
+config/accounts.json
+config/capabilities.json
+# 账号头像：从各号后台搬下来的本机读数，跟 accounts.json 是同一张脸面，不入库
+public/accounts/
+# 登录态缓存：说的是「这台机器的号还登不登得上」，换机即失效，不入库
+metrics/login-state.json
+# 按号存的登录 cookie（同平台多号靠它换罐隔离）：真凭据，只留本机，绝不入库
+metrics/account-cookies/
+# 自检结果：本机读数的快照，换机/装完东西就该重跑，入库只会留下别人的结论
+metrics/selfcheck.json
+# 采集运行留痕：说的是「这台机器哪一轮跑成没跑成」，换机要从头攒，不入库
+metrics/collect-runs.json
+# 每一次同步任务的整段输出：装机版没有终端可看，报错只靠这一行留证；会带平台内部读数，不入库
+metrics/run-log.jsonl
+# 起步向导进度：认的是「这台机器走到哪一步」，换机要从头走
+metrics/start-guide.json
+# 对话记录：原话里会带选题、账号、未定稿文案，只留本机，绝不进公开快照
+metrics/chats/
+# 当前监听端口：随机端口每次启动都换，入库只会留一个假地址
+metrics/server.json
+# 排班看门狗的进程锁：认的是「这台机器哪一号进程在跑」，换机即废，不入库
+metrics/auto-run-lock.json
+# 桌面版排班的当天账：说的是「这台机器今天跑成没跑成」，换机要从头攒
+metrics/auto-run.json
+# 复盘结论台账：稿 md 里的「这篇教会了我们什么」才是真身，这一份每次 gen:data 重摊，入库只会和源文分家
+metrics/lessons.md
+
+# videos/ —— 各产品的视频子工程（自带 package.json / node_modules / out）
+# 随本仓做版本管理（闭源产品资产，含商业文案与品牌），但被 scripts/publish-oss.mjs
+# 整棵排除在开源导出之外。各子工程内的 .gitignore 继续生效（out/、public/app、public/koubo 等）。
+
+# public/videos/ —— 视频创作落地的二进制成片（由口播工程渲染而来，不入库）
+public/videos
+
+# public/viral/<平台>/<id>/ —— 爆款采集顺手搬回的源料（逐页原图 / 源片 mp4）。
+# 二进制、可重采、只喂本机 OCR，不入库；封面（<平台>/<id>.jpg）仍旧入库。
+public/viral/*/*/
+
+# public/viral-search/ —— 「搜爆款」弹层那一趟临时落的候选封面。
+# 挑中入库时会复制进 public/viral/<平台>/，候选本身是给人看过就丢的，不入库。
+public/viral-search/
+
+# public/benchmark-search/ —— 「收对标」弹层那一趟临时落的候选头像，同理不入库。
+# 挑中建档时另存进 public/benchmarks/<平台>/，那才是留下的资产。
+public/benchmark-search/
+
+# public/inspiration/<id>/source.mp4 —— 灵感库视频卡搬回的源片（工作台就地播）。
+# 逐页原图 page-NN 仍旧入库，只挡二进制成片。
+public/inspiration/*/*.mp4
+
+# 本机 OCR 二进制：源码在 tools/ocr.swift，缺了现场编译，不必入库
+tools/ocr
+
+# 取料脚本装进来的外部命令行工具（ffmpeg/ffprobe/ocr/whisper-cli）与它的记账文件。
+# 由 npm run fetch:bin 重装，体积数百 MB，绝不入库、绝不进公开快照仓。
+bin/
+
+# 本机跑批的临时场地：验证脚本、CDP 截图、mock 稿、浏览器 profile 缓存。
+# 每次验收都会重新生成，入库只会把仓库撑爆；要留的结论写进 docs/ 或稿件。
+tmp/
+.scratch/
+spark-output/
+
+# 本机私密配置：SMTP、GitHub OAuth 凭据。只进这台机器，绝不入库、绝不进公开快照仓。
+.env
+.env.*
+!.env.example
+
+# 桌面打包产物（含整棵 node_modules）。由打包脚本重建，产物走分发渠道不入仓。
+release/

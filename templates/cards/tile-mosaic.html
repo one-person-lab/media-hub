@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+  }
+
+  .wrap { padding: 96px 84px 0; }
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 24px;
+    letter-spacing: .3em;
+    color: var(--ink-3, #9A917C);
+  }
+
+  /* 标题占一行，右边留白给页码，不居中 */
+  .tag { margin: 46px 0 54px; }
+  .tag .ln { display: block; }
+  .tag b {
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 104px;
+    font-weight: 700;
+    line-height: 1.16;
+  }
+  .tag b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); padding: 0 18px; }
+  .tag b.pale { color: var(--ink-2b, #3A3529); }
+
+  /* 四格矩阵：底色按位置轮转，格子之间只留 12px 缝 */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .cell {
+    min-height: 336px;
+    padding: 44px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--surface-2, #F2EADA);
+    color: var(--ink, #111);
+  }
+  .cell:nth-child(1) { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); }
+  .cell:nth-child(2) { background: var(--surface, #FAF3E3); }
+  .cell:nth-child(3) { background: var(--surface, #FAF3E3); }
+  .cell:nth-child(4) { background: var(--ink, #111); color: var(--page, #FFFDF8); }
+  .cell.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); }
+  .cell.pale { background: var(--surface-2, #F2EADA); color: var(--ink, #111); }
+
+  /* emoji 位没填就不占地方 */
+  .emoji:empty { display: none; }
+  .emoji { font-size: 56px; line-height: 1; }
+  .name {
+    font-size: 58px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -.01em;
+  }
+  .meta {
+    margin-top: 18px;
+    font-size: 32px;
+    line-height: 1.5;
+    opacity: .68;
+  }
+  .meta .em { font-weight: 700; opacity: 1; }
+
+  .foot {
+    position: absolute;
+    left: 84px;
+    right: 84px;
+    bottom: 56px;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 22px;
+    border-top: var(--rule-w, 5px) solid var(--rule, #111);
+    font-size: 25px;
+    letter-spacing: .12em;
+    color: var(--ink-3, #9A917C);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head"><span>__BRAND__</span><span>__PAGENO__</span></div>
+    <div class="tag">__TITLE__</div>
+    <div class="grid">__CELLS__</div>
+  </div>
+  <div class="foot"><span>__KICKER__</span></div>
+</body>
+</html>

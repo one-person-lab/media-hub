@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>创作者增长平台</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      /**
+       * 主题预上色：首屏绘制前把本地存储里的主题挂到 <html data-theme>，
+       * 否则 Vue 挂载前会闪一帧默认色。键与 src/lib/useTheme.ts 共用。
+       * 没存过主题的访客直接上暗色——平台默认就是暗色，不能先闪一帧浅色再翻黑。
+       */
+      try {
+        var t = localStorage.getItem('media-hub-theme')
+        if (t !== 'pro' && t !== 'neo' && t !== 'dark') t = 'dark'
+        document.documentElement.dataset.theme = t
+      } catch (e) {}
+    </script>
+    <script>
+      /**
+       * 首屏兜底。数据没读到时 App 从不挂载，页面只剩 body 底色（看着像前端坏了）；
+       * 本地服务整个连不上时连 main.ts 都取不到，任何模块里的 catch 都不会运行——
+       * 所以错误卡必须由这段内联脚本自己画，样式也不能依赖 style.css（它随 main.ts 一起失败）。
+       *
+       * 卡片不许写猜测的话：画之前先自己问一次数据端点，构建失败的原文（点名到文件）和该做的下一步
+       * 都在响应里。问不出原因才退回最笼统的那句。
+       */
+      window.__bootError = function () {
+        var app = document.getElementById('app')
+        if (!app || app.dataset.bootHandled) return
+        app.dataset.bootHandled = '1'
+        var ask = fetch('generated.json', { cache: 'no-store' })
+          .then(function (r) {
+            // 200 说明数据是好的，是界面脚本自己没起来；非 200 的响应体里带着原因与该做的一步
+            if (r.ok) return { h1: '界面脚本没起来', p: '数据是好的，但页面没挂上。', a: '' }
+            return r.json().then(function (j) {
+              return { h1: '内容读不出来，工作台先停在这', p: j.error || '数据端点没给原因', a: j.action || '' }
+            }, function () {
+              return { h1: '内容读不出来，工作台先停在这', p: '数据端点答了，但没说原因。', a: '' }
+            })
+          })
+          .catch(function () {
+            return { h1: '连不上工作台的数据服务', p: '工作台要靠本机服务打开：用桌面版图标，或确认服务已经起来。', a: '' }
+          })
+        Promise.resolve(ask).then(function (x) {
+          // 两种坏法都得好看：CSS 一起挂了（走 var 的第二档字面值，按默认暗色给）和 CSS 已经生效（跟着主题走）。
+          // 标题的 color 必须自己写：style.css 的 base 层会给所有 h1 上 --app-ink，
+          // 浅色主题下那是近黑、暗色下近白，只有跟着卡面走才不会糊。
+          var card = document.createElement('div')
+          card.setAttribute(
+            'style',
+            'max-width:30rem;margin:16vh auto 0;padding:1.4rem 1.5rem;text-align:center;' +
+            'font-family:var(--font-sans,ui-sans-serif,-apple-system,"PingFang SC",sans-serif);' +
+            'background:var(--app-surface,#17171d);color:var(--app-ink,#ececf1);' +
+            'border:var(--app-border-w,1px) solid var(--app-line-strong,#3a3a46);' +
+            'border-radius:var(--app-radius-lg,.75rem);box-shadow:var(--app-shadow,0 1px 2px rgba(0,0,0,.4))',
+          )
+          card.innerHTML =
+            '<h1 style="font-size:1.125rem;font-weight:600;margin:0 0 .5rem;color:var(--app-ink,#ececf1)"></h1>' +
+            '<p class="why" style="margin:0 0 1rem;font-size:.875rem;line-height:1.6;' +
+            'color:var(--app-ink-2,#b0b0ba);word-break:break-word"></p>' +
+            '<p class="next" style="display:none;margin:0 0 1rem;font-size:.875rem;line-height:1.6;text-align:left;' +
+            'padding:.6rem .7rem;border:1px solid var(--app-line,#2b2b35);border-radius:var(--app-radius-md,.5rem);' +
+            'background:var(--app-surface-2,#1e1e26);color:var(--app-ink-2,#b0b0ba)"></p>' +
+            '<button style="display:inline-flex;align-items:center;padding:.45rem 1rem;font-size:.875rem;font-weight:600;' +
+            'border:0;border-radius:var(--app-radius-md,.5rem);cursor:pointer;' +
+            'background:var(--app-accent,#8f87e8);color:var(--app-accent-ink,#ffffff)">重试</button>'
+          // 原因与措辞一律当文字塞，报错里带尖括号也不能把这张卡撑破
+          card.querySelector('h1').textContent = x.h1
+          card.querySelector('.why').textContent = x.p
+          if (x.a) {
+            var next = card.querySelector('.next')
+            next.textContent = '该做的下一步：' + x.a
+            next.style.display = ''
+          }
+          card.querySelector('button').onclick = function () {
+            location.reload()
+          }
+          app.replaceChildren(card)
+        })
+      }
+      // 给正常挂载留足时间（冷启动时 vite 还要预构建依赖），到点仍是空的就报错
+      setTimeout(window.__bootError, 10000)
+    </script>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

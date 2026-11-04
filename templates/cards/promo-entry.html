@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background:
+      radial-gradient(900px 640px at 88% -4%, rgba(244,199,124,.13) 0%, rgba(244,199,124,0) 66%),
+      linear-gradient(162deg, #0a1220 0%, #101927 58%, #0a1220 100%);
+    color: #f4f7fb;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    overflow: hidden; position: relative;
+  }
+
+  .head { position: absolute; left: 88px; right: 88px; top: 92px; }
+  .kicker { font-size: 28px; letter-spacing: 3px; color: #f4c77c; }
+  .title { margin-top: 18px; }
+  .title .ln { display: block; }
+  .title b { font-size: __ZH__; line-height: 1.26; font-weight: 900; letter-spacing: -2px; }
+  .title b.hot { color: #f4f7fb; }
+  .title b.pale { color: #f4c77c; }
+
+  .card { position: absolute; left: 88px; right: 88px; border-radius: 34px; }
+  .card-a {
+    top: 392px; height: 452px; background: #f4f7fb; color: #14202f;
+    padding: 42px 46px; box-shadow: 0 34px 90px rgba(0,0,0,.42);
+  }
+  .card-a .label { font-size: 26px; font-weight: 800; letter-spacing: 2px; color: #9a7420; }
+  .card-a .lead { margin-top: 18px; font-size: 54px; font-weight: 900; letter-spacing: -2px; }
+  .search {
+    margin-top: 30px; height: 94px; border-radius: 999px; background: #fff;
+    border: 3px solid #14202f; display: flex; align-items: center; padding: 0 12px 0 34px;
+  }
+  .search .icon { width: 34px; height: 34px; border: 4px solid #7d8ca3; border-radius: 50%; position: relative; flex: 0 0 auto; }
+  .search .icon::after { content: ""; position: absolute; right: -12px; bottom: -8px; width: 16px; height: 4px; background: #7d8ca3; transform: rotate(45deg); border-radius: 2px; }
+  .search .q { margin-left: 24px; font-size: 34px; font-weight: 700; color: #14202f; flex: 1 1 auto; }
+  .search .btn { flex: 0 0 auto; background: #f4c77c; color: #14202f; font-size: 29px; font-weight: 900; border-radius: 999px; padding: 16px 34px; }
+  .card-a .note { margin-top: 24px; font-size: 29px; line-height: 1.55; color: #5b6b82; }
+  .card-a .note b.em { color: #14202f; font-weight: 800; }
+
+  .card-b {
+    top: 884px; height: 452px; padding: 42px 46px;
+    background: linear-gradient(150deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+    border: 2px solid rgba(244,199,124,.34);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .card-b .label { font-size: 26px; font-weight: 800; letter-spacing: 2px; color: #f4c77c; }
+  .card-b .row { display: flex; align-items: center; justify-content: space-between; }
+  .badge { font-size: 23px; font-weight: 800; color: #14202f; background: #6fd3b8; border-radius: 999px; padding: 8px 20px; }
+  .card-b .lead { margin-top: 18px; font-size: 54px; font-weight: 900; letter-spacing: -2px; color: #f4f7fb; }
+  .stores { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 16px; }
+  .stores .item { display: flex; }
+  .stores .zh {
+    display: inline-block; font-size: 29px; font-weight: 700; color: #f4f7fb;
+    background: rgba(244,199,124,.10); border: 2px solid rgba(244,199,124,.38);
+    border-radius: 999px; padding: 14px 28px;
+  }
+  .stores .src, .stores .en { display: none; }
+  .card-b .note { margin-top: 26px; font-size: 29px; line-height: 1.55; color: rgba(244,247,251,.55); }
+  .card-b .note b.em { color: #f4f7fb; font-weight: 700; }
+
+  .foot {
+    position: absolute; left: 88px; right: 88px; bottom: 52px;
+    display: flex; justify-content: space-between; font-size: 26px; color: rgba(244,247,251,.36);
+  }
+</style>
+</head>
+<body>
+  <div class="head">
+    <div class="kicker">__KICKER__</div>
+    <div class="title">__TITLE__</div>
+  </div>
+
+  <div class="card card-a">
+    <div class="label">__LABEL1__</div>
+    <div class="lead">__LEAD1__</div>
+    <div class="search">
+      <span class="icon"></span>
+      <span class="q">醒醒老己</span>
+      <span class="btn">搜一搜</span>
+    </div>
+    <div class="note">__ECHO__</div>
+  </div>
+
+  <div class="card card-b">
+    <div class="row">
+      <div class="label">__LABEL2__</div>
+      <div class="badge">__BADGE__</div>
+    </div>
+    <div class="lead">__LEAD2__</div>
+    <div class="stores">__ROWS__</div>
+    <div class="note">__CAPTION__</div>
+  </div>
+
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

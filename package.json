@@ -1,0 +1,58 @@
+{
+  "name": "media-hub",
+  "version": "0.1.0",
+  "description": "一个人的创作者增长平台：灵感 → 选题 → 创作 → 排期 → 发布 → 复盘，机器把重复的活干完，最后一下人点",
+  "license": "MIT",
+  "type": "module",
+  "main": "electron/main.mjs",
+  "scripts": {
+    "gen:data": "node scripts/build-data.mjs",
+    "fetch:bin": "node scripts/fetch-binaries.mjs",
+    "test": "node --test \"scripts/**/*.test.mjs\"",
+    "collect": "node scripts/run-ego.mjs scripts/collect-platforms.mjs",
+    "publish-check": "node scripts/run-ego.mjs scripts/publish-check.mjs",
+    "capture": "node scripts/capture-link.mjs",
+    "predev": "npm run gen:data --silent",
+    "dev": "node scripts/with-system-proxy.mjs vite",
+    "serve": "node scripts/with-system-proxy.mjs node scripts/serve.mjs",
+    "app": "node scripts/with-system-proxy.mjs electron .",
+    "prebuild": "npm run gen:data --silent",
+    "build": "vue-tsc -b && vite build",
+    "preview": "node scripts/with-system-proxy.mjs vite preview",
+    "collect:note": "node scripts/run-ego.mjs scripts/collect-note.mjs",
+    "viral": "node scripts/run-ego.mjs scripts/viral-collect.mjs",
+    "viral:source": "node scripts/run-ego.mjs scripts/viral-collect.mjs --args --backfill=6",
+    "favorites": "node scripts/run-ego.mjs scripts/favorites-collect.mjs",
+    "benchmark": "node scripts/run-ego.mjs scripts/benchmark-collect.mjs",
+    "benchmark:avatars": "node scripts/run-ego.mjs scripts/benchmark-collect.mjs --args --refill-only",
+    "render:card": "node scripts/run-ego.mjs scripts/render-cards.mjs",
+    "publish:xhs": "ego-browser nodejs < scripts/publish-xhs.mjs",
+    "publish:douyin": "ego-browser nodejs < scripts/publish-douyin.mjs",
+    "publish:mp": "ego-browser nodejs < scripts/publish-mp.mjs",
+    "publish:kuaishou": "ego-browser nodejs < scripts/publish-ks.mjs",
+    "publish:sph": "ego-browser nodejs < scripts/publish-sph.mjs",
+    "publish:oss": "node scripts/publish-oss.mjs",
+    "backup": "node scripts/backup-push.mjs"
+  },
+  "dependencies": {
+    "lucide-vue-next": "^1.0.0",
+    "nodemailer": "^10.3.1",
+    "vue": "^3.5.41"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^24.13.3",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "@vue/tsconfig": "^0.9.1",
+    "autoprefixer": "^10.5.5",
+    "electron": "^44.4.5",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.2",
+    "vite": "^8.2.2",
+    "vue-tsc": "^3.3.11"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true
+  }
+}

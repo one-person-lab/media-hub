@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background:
+      radial-gradient(1000px 660px at 88% -8%, #2a2040 0%, rgba(42,32,64,0) 70%),
+      radial-gradient(820px 560px at -10% 70%, #241a38 0%, rgba(36,26,56,0) 70%),
+      linear-gradient(180deg, #0b0714 0%, #171122 55%, #0b0714 100%);
+    color: #fff;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    overflow: hidden; position: relative;
+  }
+  .blob { position: absolute; border-radius: 50%; }
+  .b1 { width: 380px; height: 380px; right: -120px; top: 520px; background: #a78bfa; opacity: .13; }
+  .b2 { width: 260px; height: 260px; left: -90px; bottom: 120px; background: #ff8b6a; opacity: .1; }
+
+  .head { position: absolute; left: 88px; right: 88px; top: 96px; }
+  .kicker { font-size: 28px; letter-spacing: 3px; color: #a78bfa; }
+  .head .title { margin-top: 18px; }
+  .head .ln { display: block; }
+  .head b { font-size: __ZH__; line-height: 1.3; font-weight: 900; letter-spacing: -1px; }
+  .head b.hot { color: #ffd166; }
+  .head b.pale { color: #ff8b6a; }
+
+  .body { position: absolute; left: 88px; right: 88px; top: __GAP__; display: flex; align-items: flex-start; gap: 52px; }
+  .phone {
+    flex: 0 0 auto; width: 470px; height: 981px;
+    border: 4px solid rgba(167,139,250,.36); border-radius: 58px; overflow: hidden; background: #171122;
+    box-shadow: 0 40px 100px rgba(0,0,0,.7), 0 0 110px rgba(167,139,250,.16);
+  }
+  .phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .side { flex: 1 1 auto; padding-top: 40px; }
+  .rows .item { margin-bottom: 46px; }
+  .rows .zh { font-size: 40px; line-height: 1.45; font-weight: 700; color: #f2eeff; }
+  .rows .zh b.em { color: #ffd166; font-weight: 800; }
+  .rows .src { display: block; margin-top: 8px; font-size: 27px; color: #8d82ac; }
+  .rows .en { display: none; }
+  .caption { margin-top: 8px; font-size: 30px; line-height: 1.6; color: #b3a9d4; }
+  .caption b.em { color: #fff; font-weight: 700; }
+
+  .foot {
+    position: absolute; left: 88px; right: 88px; bottom: 58px;
+    display: flex; justify-content: space-between; font-size: 27px; color: #6f6488;
+  }
+</style>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="head">
+    <div class="kicker">__KICKER__</div>
+    <div class="title">__TITLE__</div>
+  </div>
+  <div class="body">
+    <div class="phone"><img src="__IMG__" alt=""></div>
+    <div class="side">
+      <div class="rows">__ROWS__</div>
+      <div class="caption">__CAPTION__</div>
+    </div>
+  </div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

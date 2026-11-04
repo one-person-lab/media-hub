@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 190px;
+  }
+
+  /* 数据大字页：一个数字吃掉半屏，其余全是它的注脚。
+     爆款里这一类的钩子来自「具体数」——「87% 的人…」比「很多人…」的点击高一档。 */
+  .kicker:empty { display: none; }
+  .kicker {
+    align-self: flex-start;
+    margin: 96px 0 0 84px;
+    background: var(--ink, #111);
+    color: var(--page, #FFFDF8);
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    padding: 12px 30px;
+  }
+
+  .figure { margin: 150px 84px 0; }
+  .figure .num {
+    font-size: 420px;
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -10px;
+    color: var(--ink, #111);
+  }
+  /* 「」里的片段被渲染器换成 .hl：数字里的单位或关键词压 accent */
+  .figure .num .hl { color: var(--accent-ink, #111); background: var(--accent, #FAE79B); padding: 0 18px; }
+  .figure .en:empty { display: none; }
+  .figure .en {
+    margin-top: 40px;
+    font-size: 48px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--ink-2, #6B6350);
+  }
+
+  .rule { margin: 120px 84px 0; border-top: var(--rule-w, 5px) solid var(--rule, #111); }
+
+  .caption:empty { display: none; }
+  .caption { margin: 78px 84px 0; font-size: 62px; font-weight: 600; line-height: 1.5; letter-spacing: 0.5px; }
+  .caption b.em {
+    background: linear-gradient(to bottom, transparent 58%, var(--accent, #FAE79B) 58%);
+    color: var(--ink, #111);
+    font-weight: 900;
+    padding: 0 6px;
+  }
+
+  /* 出处用 margin-top: auto 沉到色带上方：数字页只有四块内容，
+     不把它顶到底就全堆在上面，中间留一条没人看的空。 */
+  .cite:empty { display: none; }
+  .cite {
+    margin: auto 84px 0;
+    font-size: 34px;
+    color: var(--ink-4, #7C7360);
+  }
+  .cite .en { margin-left: 18px; color: var(--ink-3, #9A917C); }
+
+  .foot {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 130px;
+    background: var(--surface-2, #F2EADA);
+    color: var(--ink, #111);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 84px;
+    font-size: 34px;
+    font-weight: 600;
+  }
+  .foot .no { color: var(--ink-2, #6B6350); font-weight: 500; }
+</style>
+</head>
+<body>
+  <div class="kicker">__KICKER__</div>
+  <div class="figure">
+    <div class="num">__QUOTE__</div>
+    <div class="en">__QUOTE_EN__</div>
+  </div>
+  <div class="rule"></div>
+  <div class="caption">__CAPTION__</div>
+  <div class="cite"><span>__SRC__</span><span class="en">__SRCEN__</span></div>
+  <div class="foot"><span>__BRAND__</span><span class="no">__PAGENO__</span></div>
+</body>
+</html>

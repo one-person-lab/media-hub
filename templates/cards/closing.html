@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    padding: 150px 96px 0;
+    overflow: hidden;
+  }
+  .kicker { font-size: 34px; font-weight: 600; letter-spacing: 6px; color: var(--accent-deep, #A08A5A); margin-bottom: 46px; }
+  /* head 的色块是 inline-block：一行容 11 字（86px），前一块不满 11 字时后一块的首字会被挤到同一行再从中间断开——每块都要按 ≤11 字断句 */
+  h2 { font-size: 86px; font-weight: 800; line-height: 1.34; margin-bottom: 66px; }
+  h2 .hl { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); padding: 0 10px; }
+  h2 b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); padding: 0 10px; }
+  h2 b.pale { background: var(--surface-2, #F2EADA); padding: 0 10px; }
+  .line { font-size: 44px; line-height: 1.62; margin-bottom: 34px; }
+  .line .src { font-size: 36px; color: var(--ink-4, #7C7360); }
+  .cta {
+    margin-top: 78px;
+    padding-top: 40px;
+    border-top: var(--rule-w, 5px) solid var(--rule, #111);
+    font-size: 46px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .brand { margin-top: 40px; font-size: 30px; color: var(--ink-3, #9A917C); letter-spacing: 2px; }
+</style>
+</head>
+<body>
+  <div class="kicker">__KICKER__</div>
+  <h2>__HEAD__</h2>
+  __ROWS__
+  <div class="cta">__CTA__</div>
+  <div class="brand">__BRAND__</div>
+</body>
+</html>

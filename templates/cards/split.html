@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+  }
+  .wrap { padding: 104px 84px 0; }
+
+  .tag { margin-bottom: 40px; text-align: center; }
+  .tag .ln { display: block; }
+  .tag b { font-size: 62px; font-weight: 800; line-height: 1.5; }
+  .tag b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); padding: 4px 14px; }
+  .tag b.pale { background: var(--surface-2, #F2EADA); padding: 4px 14px; }
+
+  /* 左右分栏：结论靠「哪一栏被描边」说出来，不靠形容词。
+     两栏等高（stretch）且给足最小高度——只写两三条时也不许塌成半张卡，下面结论条才压得住。 */
+  .cols { display: flex; align-items: stretch; gap: 28px; min-height: 1080px; }
+  .col { flex: 1; min-width: 0; padding: 30px 28px 34px; background: var(--surface, #FAF3E3); display: flex; flex-direction: column; }
+  .col.pale { background: var(--surface-2, #F2EADA); }
+  .col.hot { background: var(--page, #FFFDF8); border: var(--rule-w, 5px) solid var(--rule, #111); }
+
+  .cname {
+    font-size: 54px;
+    font-weight: 800;
+    line-height: 1.3;
+    padding-bottom: 18px;
+    margin-bottom: 26px;
+    border-bottom: 3px solid var(--rule, #111);
+  }
+  .cname .cen { display: block; margin-top: 8px; font-size: 30px; font-weight: 500; color: var(--ink-2, #6B6350); }
+
+  /* 两栏等高是这张卡的命门：短的那栏不许只占上半截。gap 是保底行距，多出来的高度由
+     space-between 摊进行距里，所以三条和五条都不会塌、也不会挤。 */
+  .citems { flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 26px; }
+  .item .zh { font-size: __ZH__; font-weight: 400; line-height: 1.55; }
+  .item .zh .em { font-weight: 800; }
+  .item .zh .src { font-weight: 500; color: var(--ink-4, #7C7360); }
+  .item .en { margin-top: 10px; font-size: __EN__; font-weight: 400; line-height: 1.45; color: var(--ink-2, #6B6350); }
+
+  /* 结论条：分栏看完必须给一句话，否则只是两张清单 */
+  .verdict {
+    margin-top: 52px;
+    padding: 30px 34px;
+    border-top: var(--rule-w, 5px) solid var(--rule, #111);
+    border-bottom: var(--rule-w, 5px) solid var(--rule, #111);
+    font-size: __VERDSIZE__;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .verdict:empty { display: none; }
+  .verdict b.em { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); font-weight: 700; padding: 4px 12px; }
+
+  .foot {
+    position: absolute;
+    left: 84px;
+    right: 84px;
+    bottom: 62px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 28px;
+    color: var(--ink-3, #9A917C);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="tag">__TITLE__</div>
+    <div class="cols">__LEFT____RIGHT__</div>
+    <div class="verdict">__VERDICT__</div>
+  </div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

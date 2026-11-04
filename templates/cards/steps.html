@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+  }
+  .wrap { padding: 118px 96px 0; }
+
+  /* 步骤名压色块 = 全页最大强调；没写 title 时整块不占位 */
+  .tag:empty { display: none; }
+  .tag { margin-bottom: 62px; }
+  .tag .ln { display: block; }
+  .tag b { font-size: 62px; font-weight: 800; line-height: 1.5; }
+  .tag b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); padding: 4px 14px; }
+  .tag b.pale { background: var(--surface-2, #F2EADA); padding: 4px 14px; }
+
+  .steps { counter-reset: step; }
+  /* 编号圆压在线上，线段只画到下一个圆为止（最后一项不留尾巴）：
+     圆心在 left:46px，所以文字让开 128px；线段高度按 gap 算，改了间距线不会断。 */
+  .item { position: relative; padding-left: 128px; margin-bottom: __GAP__; }
+  .item:last-child { margin-bottom: 0; }
+  .item::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    background: var(--accent, #FAE79B);
+    color: var(--accent-ink, #111);
+    font-size: 46px;
+    font-weight: 800;
+    line-height: 92px;
+    text-align: center;
+  }
+  .item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 44px;
+    top: 106px;
+    bottom: calc(10px - __GAP__);
+    width: var(--rule-w, 5px);
+    background: var(--rule, #111);
+  }
+  .item .zh { font-size: __ZH__; font-weight: 400; line-height: 1.6; }
+  .item .zh .em { font-weight: 800; }
+  .item .zh .src { font-weight: 500; color: var(--ink-4, #7C7360); }
+  .item .en { margin-top: 12px; font-size: __EN__; font-weight: 400; line-height: 1.5; text-align: left; color: var(--ink-2, #6B6350); }
+  .item .en .em { font-weight: 700; color: var(--ink-2b, #3A3529); }
+
+  .foot {
+    position: absolute;
+    left: 96px;
+    right: 96px;
+    bottom: 62px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 28px;
+    color: var(--ink-3, #9A917C);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="tag">__TITLE__</div>
+    <div class="steps">__ROWS__</div>
+  </div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

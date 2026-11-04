@@ -1,0 +1,41 @@
+{
+  "_说明": "平台模板表：授权页「新增账号」照抄这里的一条生成登记，写进 config/accounts.json。这里只放平台级的固定信息（后台地址、推草稿脚本、形态说明），账号身份（id/key）与昵称在新增时现推。加一个新平台要同时给 publish-check 的 CHECKS 补采集器，光在这里加一条是加不出来的。",
+  "platforms": [
+    {
+      "platform": "小红书",
+      "key": "xiaohongshu",
+      "script": "./scripts/publish-xhs.mjs",
+      "backend": "https://creator.xiaohongshu.com/new/note-manager",
+      "note": "浏览器里登录的号即发布用的号（本机授权，登录态只存在这台机器上）。图文草稿为单槽覆盖，推新稿会顶掉旧草稿。"
+    },
+    {
+      "platform": "抖音",
+      "key": "douyin",
+      "script": "./scripts/publish-douyin.mjs",
+      "backend": "https://creator.douyin.com/creator-micro/content/manage",
+      "note": "抖音图文形态与小红书不同：图承载内容，文案框只写钩子 + 互动位。图文草稿单槽覆盖，推新稿会顶掉旧草稿。"
+    },
+    {
+      "platform": "公众号",
+      "key": "mp",
+      "script": "./scripts/publish-mp.mjs",
+      "backend": "https://mp.weixin.qq.com/",
+      "note": "微信公众平台 mp.weixin.qq.com · 发贴图（图片消息），7 张图卡 + 短描述，浏览器扫码登录即发布用的号（本机授权，登录态只存在这台机器上）；只存草稿箱，不群发"
+    },
+    {
+      "platform": "快手",
+      "key": "kuaishou",
+      "script": "./scripts/publish-ks.mjs",
+      "backend": "https://cp.kuaishou.com/profile",
+      "note": "快手创作者服务平台 cp.kuaishou.com · 图文没有网页草稿箱（取消只给「继续编辑/放弃」），脚本传图填完文案后交接，「发布」由人工点（铁律）"
+    },
+    {
+      "platform": "视频号",
+      "key": "sph",
+      "script": "./scripts/publish-sph.mjs",
+      "backend": "https://channels.weixin.qq.com/platform",
+      "quickLogin": "微信快捷登录",
+      "note": "视频号助手 channels.weixin.qq.com · 图文动态图片≤18张、标题≤22字符；有网页草稿箱，脚本点「保存草稿」后停手，「发表」由人工点（铁律）；「链接」只能挂公众号文章/红包封面，挂不了小程序"
+    }
+  ]
+}

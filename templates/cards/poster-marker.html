@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+  }
+
+  /* 左上角系列编号片：源爆款封面同款（「××系列#01」黑底白字）。
+     它的作用不是装饰——连载编号让人以为后面还有，关注与收藏都吃这一口。 */
+  .chip:empty { display: none; }
+  .chip {
+    position: absolute;
+    left: 84px;
+    top: 84px;
+    background: var(--ink, #111);
+    color: var(--page, #FFFDF8);
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    line-height: 1.35;
+    padding: 12px 28px;
+  }
+
+  /* 整页当一张海报排：标题区顶到上面，观点组靠 `margin-top: auto` 沉到色带上方。
+     三条只给两条的量时，空出来的那一截留在中间而不是留在脚底——脚底空着像没排完。 */
+  .wrap { padding: 296px 84px 210px; display: flex; flex-direction: column; min-height: 1660px; }
+  .points:empty { display: none; }
+  .points { margin-top: auto; }
+
+  /* 标题：字号顶到画面宽度，一行最多七个字，缩略图里字就是图 */
+  .hero .ln { display: block; margin-bottom: 14px; }
+  .hero b {
+    display: inline-block;
+    font-size: 146px;
+    font-weight: 900;
+    line-height: 1.16;
+    letter-spacing: 2px;
+    padding: 0 14px;
+  }
+  .hero b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); }
+  .hero b.pale { background: var(--surface-2, #F2EADA); }
+
+  /* 钩子句：荧光笔只划过字下半截，比整块压色轻一档，用来承接标题 */
+  .echo { margin-top: 64px; font-size: 54px; font-weight: 600; line-height: 1.55; letter-spacing: 1px; }
+  .echo b.em {
+    background: linear-gradient(to bottom, transparent 58%, var(--accent, #FAE79B) 58%);
+    color: var(--ink, #111);
+    font-weight: 800;
+    padding: 0 6px;
+  }
+
+  /* 核心观点：左侧一条粗线代替序号，两条就够——封面不许把人淹死 */
+  .item {
+    margin-top: 62px;
+    padding-left: 30px;
+    border-left: var(--rule-w, 5px) solid var(--rule, #111);
+  }
+  .item:first-child { margin-top: 0; }
+  .item .zh { font-size: 50px; font-weight: 600; line-height: 1.5; }
+  .item .zh .em { font-weight: 900; }
+  .item .zh .src { font-weight: 500; color: var(--ink-4, #7C7360); }
+  .item .en { margin-top: 12px; font-size: 38px; font-weight: 400; line-height: 1.45; color: var(--ink-2, #6B6350); }
+
+  /* 底部满幅色带：把以前空着的下三分之一填住，署名落在带子里。
+     带子吃 --surface-2 不吃 --surface——深色皮的 --surface 是黑块色，压上去字就糊了
+     （全站落字的色块一律只用 --surface-2 或 --accent/--accent-ink 这两对）。 */
+  .band {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 158px;
+    background: var(--surface-2, #F2EADA);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 84px;
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--ink, #111);
+  }
+  .band .no { color: var(--ink-2, #6B6350); font-weight: 500; }
+</style>
+</head>
+<body>
+  <div class="chip">__TAG__</div>
+  <div class="wrap">
+    <div class="hero">__TITLE__</div>
+    <div class="echo">__ECHO__</div>
+    <div class="points">__ROWS__</div>
+  </div>
+  <div class="band"><span>__BRAND__</span><span class="no">__PAGENO__</span></div>
+</body>
+</html>

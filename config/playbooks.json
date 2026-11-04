@@ -1,0 +1,72 @@
+{
+  "_说明": "方案库：从跑过的爆款里拆出来的推广结构。一条方案 = 页序 + 每页的文案槽位 + 素材槽位，不是一张成品图——一键同款只换产品、事实与截图，骨架不动。",
+  "_字段": "source=拆自哪条爆款（noteId/标题/作者/赞数/封面，必须是在册采集卡，写不出处的不进库）；sample=我们已经用它跑出来的那组图（卡片 json 与产物页码）；applies=适用哪些产品（按 config/products.json 的登记名）；pages[].layout=templates/cards/ 下的版式；role=这一页在读者身上干什么；shots=这一页要吃几张真截图；edit=向导里交给人改的槽位，其余槽位由产品档案自动填。",
+  "playbooks": [
+    {
+      "slug": "quote-open",
+      "name": "原话开场",
+      "structure": "产品里最狠的一句原话 → 三问点名 → 类型对号入座 → 结果接行动 → 一个动作",
+      "why": "封面不介绍产品，先甩一句产品自己写出来的话，让人在第一页认出自己；入口留到最后一页，全组只出现一次。",
+      "source": {
+        "noteId": "6a3e2d2d000000001101625b",
+        "title": "悄悄逆袭❗️无痛超越同龄人的顶级思维",
+        "author": "张前进的日记",
+        "likes": 46058,
+        "cover": "/viral/xiaohongshu/6a3e2d2d000000001101625b.webp",
+        "url": "https://www.xiaohongshu.com/explore/6a3e2d2d000000001101625b"
+      },
+      "sample": { "slug": "xingxing-life-test", "pages": [1, 2, 3, 4, 5] },
+      "applies": ["醒醒老己小程序", "今晚整花活小程序", "地球 Online"],
+      "pages": [
+        { "layout": "promo-hook", "role": "原话开场", "shots": 1, "edit": ["title", "echo"], "preset": { "tag": "结果页原文", "zh": 88 } },
+        { "layout": "promo-shot", "role": "三问点名", "shots": 1, "edit": ["title", "items", "caption"], "preset": { "tag": "界面实测", "zh": 76, "gap": 470 } },
+        { "layout": "promo-grid", "role": "对号入座", "shots": 0, "edit": ["title", "echo", "cells"], "preset": { "tag": "结果类型原文", "zh": 76 } },
+        { "layout": "promo-duo", "role": "结果接行动", "shots": 2, "edit": ["title", "items"], "preset": { "tag": "界面实测 · 真实结果", "zh": 68, "gap": 400 } },
+        { "layout": "promo-cta", "role": "一个动作", "shots": 0, "edit": ["title", "names", "caption"], "preset": { "zh": 92 } }
+      ]
+    },
+    {
+      "slug": "three-questions",
+      "name": "三问点名",
+      "structure": "三条日常场景点名 → 类型对号入座 → 结果接行动 → 一个动作",
+      "why": "拆自 5.0 万赞那条的次页：先三问让人点头，再把「我不行」改写成「你缺一套看清自己的方法」，最后一屏只给一个动作。",
+      "source": {
+        "noteId": "68d0029b0000000013028db8",
+        "title": "一晚上整理自己的人生",
+        "author": "梨梨依子",
+        "likes": 50328,
+        "cover": "/viral/xiaohongshu/68d0029b0000000013028db8.webp",
+        "url": "https://www.xiaohongshu.com/explore/68d0029b0000000013028db8"
+      },
+      "sample": { "slug": "xingxing-life-test", "pages": [2, 3, 4, 5] },
+      "applies": ["醒醒老己小程序", "今晚整花活小程序", "创作者增长平台"],
+      "pages": [
+        { "layout": "promo-shot", "role": "三问点名", "shots": 1, "edit": ["title", "items", "caption"], "preset": { "tag": "界面实测", "zh": 76, "gap": 470 } },
+        { "layout": "promo-grid", "role": "对号入座", "shots": 0, "edit": ["title", "echo", "cells"], "preset": { "tag": "结果类型原文", "zh": 76 } },
+        { "layout": "promo-duo", "role": "结果接行动", "shots": 2, "edit": ["title", "items"], "preset": { "tag": "界面实测 · 真实结果", "zh": 68, "gap": 400 } },
+        { "layout": "promo-cta", "role": "一个动作", "shots": 0, "edit": ["title", "names", "caption"], "preset": { "zh": 92 } }
+      ]
+    },
+    {
+      "slug": "name-the-feeling",
+      "name": "说出那个感受",
+      "structure": "命名读者说不清的感受 → 结果接行动 → 一个动作",
+      "why": "拆自 4.9 万赞那条：先替读者把已经发生却说不清的感受说破，收尾只给今天能做的一个动作，三页走完。",
+      "source": {
+        "noteId": "6a4e2597000000001c026d22",
+        "title": "自从接触了熵，我决定再也不玩手机了",
+        "author": "是李可可哟",
+        "likes": 49123,
+        "cover": "/viral/xiaohongshu/6a4e2597000000001c026d22.webp",
+        "url": "https://www.xiaohongshu.com/explore/6a4e2597000000001c026d22"
+      },
+      "sample": { "slug": "xingxing-life-test", "pages": [1, 4, 5] },
+      "applies": ["醒醒老己小程序", "BuildHub", "地球 Online"],
+      "pages": [
+        { "layout": "promo-hook", "role": "命名感受", "shots": 1, "edit": ["title", "echo"], "preset": { "tag": "结果页原文", "zh": 88 } },
+        { "layout": "promo-duo", "role": "结果接行动", "shots": 2, "edit": ["title", "items"], "preset": { "tag": "界面实测 · 真实结果", "zh": 68, "gap": 400 } },
+        { "layout": "promo-cta", "role": "一个动作", "shots": 0, "edit": ["title", "names", "caption"], "preset": { "zh": 92 } }
+      ]
+    }
+  ]
+}

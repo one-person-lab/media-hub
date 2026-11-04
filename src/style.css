@@ -1,0 +1,948 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap');
+
+@import "tailwindcss";
+
+/* ==================== 主题令牌：三套皮肤只改这一组变量 ====================
+   组件与工具类一律走 var()，切换 = 换 <html data-theme>，零重建、零刷新逻辑。
+   没挂 data-theme 时落到 :root，即 pro 这套；线上默认由 index.html 与 useTheme.ts 先挂 dark。
+     dark = 暗色创意（liblib 风：暗底、紫色强调、细边微阴影）——平台默认
+     pro  = 专业浅色（2026-10-23 起的基准：灰画布、白卡细边、单一强调色）
+     neo  = 经典 neo-brutalism（原风格，原值在此保留，设置里可切回）
+   旧视图的 bg-neo-yellow / border-black / text-neutral-600 / shadow-neo 等
+   全部映射到下面的变量，所以未迁移的视图在三套主题下也不会花掉。
+   -------------------------------------------------------------------------- */
+:root,
+[data-theme="pro"] {
+  color-scheme: light;
+
+  /* 面：画布 / 卡 / 次级面 —— 全部带一点冷偏；画布压到白卡之下一档，白卡才浮得起来 */
+  --app-canvas: #f2f4f7;
+  --app-surface: #ffffff;
+  --app-surface-2: #eceff4;
+  /* 图未到货时那块占位：底色比卡面暗一档，再让一道亮光横着扫过去 */
+  --app-skeleton: #dfe4ec;
+  --app-skeleton-sheen: rgba(255, 255, 255, 0.8);
+
+  /* 线与文字
+     浅色只有「边」和「影」两条分层的路，之前两条都关到最小，卡就化在画布里了：
+     边要一眼看得出但不出框，影要真落得下去但不发灰。
+     三档灰全部按「在白卡 / 画布 / 次级面上都 ≥4.5:1」定值：
+     ink-3 是最弱的一档，也要能当正文读（时间戳、读数都在用它）。 */
+  --app-line: #dde1e8;
+  --app-line-strong: #c6ccd7;
+  --app-ink: #0f1419;
+  --app-ink-2: #444c58;
+  --app-ink-3: #69717f;
+
+  /* 强调色：全站唯一（主动作 / 链接）。选中态不用蓝，用灰底深字
+     原来是 Tailwind blue-600 原色，一眼是框架送的色；降饱和、往靛偏一档 */
+  --app-accent: #4660d4;
+  --app-accent-hover: #3850bd;
+  --app-accent-soft: #eceffb;
+  --app-accent-ink: #ffffff;
+
+  /* 「一键同款」这类要机器真出手做一版的动作色（即创那颗紫）。
+     三套主题共用一个值：它标的是「AI 生成」这件事，不跟着皮肤走。 */
+  --app-ai: #7c4def;
+  --app-ai-hover: #6a3ce6;
+  --app-ai-ink: #ffffff;
+
+  /* 旧 neo 色板 → 专业主题里降为低饱和 tint，只做点缀不做结构 */
+  --app-tint-yellow: #fdf3dc;
+  --app-tint-green: #e6f4ea;
+  --app-tint-pink: #fdeef0;
+  --app-tint-blue: #e8f1fb;
+  --app-tint-purple: #f1edfa;
+
+  /* 状态色：六态只做点与芯片，不铺卡片 */
+  --app-tone-idle: #e9e7e1;
+  --app-tone-creating: #f7e3a8;
+  --app-tone-ready: #cfe4f8;
+  --app-tone-publishing: #e2d9f8;
+  --app-tone-published: #c9ecd5;
+  --app-tone-failed: #f8d5de;
+
+  /* 危险 / 成功的文字与柔光底 */
+  --app-danger-text: #b4232a;
+  --app-success-text: #15803d;
+  --app-danger-soft: #fdecec;
+  --app-success-soft: #e9f6ee;
+
+  /* 中性阶：暗色主题整体反转，旧视图零改动适配 */
+  --app-n50: #fafafa;
+  --app-n100: #f5f5f5;
+  --app-n200: #e5e5e5;
+  --app-n300: #d4d4d4;
+  --app-n400: #a3a3a3;
+  --app-n500: #737373;
+  --app-n600: #525252;
+  --app-n700: #404040;
+  --app-n800: #262626;
+  --app-n900: #171717;
+  --app-n950: #0a0a0a;
+
+  /* 形状：8px 控件 / 12px 卡片。工具类产品用圆角矩形，不用营销页的胶囊 */
+  --app-border-w: 1px;
+  --app-radius-md: 8px;
+  --app-radius-lg: 12px;
+  --app-shadow: 0 1px 2px rgb(16 24 40 / 0.06), 0 2px 6px rgb(16 24 40 / 0.05);
+  --app-shadow-sm: none;
+  --app-shadow-lg: 0 12px 32px rgb(16 24 40 / 0.12), 0 2px 6px rgb(16 24 40 / 0.06);
+
+  /* bento（看板 2026-11-01）：卡角比 .card 大一档，内嵌图表面板再收一档，
+     两层圆角同心才不别扭。折线只有两条，取强调色与状态绿，不再开新色 */
+  --app-radius-bento: 24px;
+  --app-radius-inset: 16px;
+  --app-chart-1: var(--app-accent);
+  --app-chart-2: var(--app-success-text);
+  /* 多平台柱图按序号取色（复盘 2026-11-01）：品牌色在暗底上会隐形（抖音=#111），
+     所以图上不用品牌色，用这一族在白卡与暗卡上都够对比的色 */
+  --app-chart-3: #d97706;
+  --app-chart-4: #db2777;
+  --app-chart-5: #0d9488;
+
+  /* 选中 / 按下 / 焦点环：选中 = 浅灰底 + 深字（Buffer/Linear 语言），蓝色只留给主按钮与链接 */
+  --app-sel-bg: #e6eaf2;
+  --app-sel-ink: var(--app-ink);
+  --app-sel-border: transparent;
+  --app-sel-shadow: none;
+  --app-press: 0px;
+  --app-focus-ring: 0 0 0 1px var(--app-accent);
+  --app-scrim: rgb(17 17 17 / 0.32);
+
+  /* 搜索框面：浅色主题靠细边定形，暗色主题无边填充才不显得一格一格框出来 */
+  --app-field-bg: var(--app-surface);
+  --app-field-bg-focus: var(--app-surface);
+  --app-field-border: var(--app-line-strong);
+  --app-field-border-focus: #97a0b0;
+  --app-field-ring: none;
+  /* 占位词比 ink-3 再退一档（约 3:1）：主流做法是搜索框里没输入的那句提示
+     只负责说清「这儿能搜什么」，亮度不许盖过同一行里的页签和筛选。 */
+  --app-field-placeholder: #8b93a2;
+}
+
+/* 经典 neo-brutalism：原风格原值，设置里可切回 */
+[data-theme="neo"] {
+  color-scheme: light;
+
+  --app-canvas: #f7efe1;
+  --app-surface: #fffcf5;
+  --app-surface-2: #fdf8ee;
+  --app-skeleton: #f1e8d6;
+  --app-skeleton-sheen: rgba(255, 255, 255, 0.75);
+  --app-line: #111111;
+  --app-line-strong: #111111;
+  --app-ink: #111111;
+  --app-ink-2: #55503f;
+  --app-ink-3: #6f695c;
+  --app-accent: #111111;
+  --app-accent-hover: #000000;
+  --app-accent-soft: #ffffff;
+  --app-accent-ink: #ffffff;
+  --app-tint-yellow: #ffe89b;
+  --app-tint-green: #b9f0c4;
+  --app-tint-pink: #ffd6e8;
+  --app-tint-blue: #bfe0ff;
+  --app-tint-purple: #e3d1ff;
+  --app-tone-idle: #e5e5e5;
+  --app-tone-creating: #ffe89b;
+  --app-tone-ready: #bfe0ff;
+  --app-tone-publishing: #e3d1ff;
+  --app-tone-published: #b9f0c4;
+  --app-tone-failed: #ffd6e8;
+  --app-danger-text: #b91c1c;
+  --app-success-text: #15803d;
+  --app-danger-soft: #fdecec;
+  --app-success-soft: #e9f6ee;
+  --app-n50: #fafafa;
+  --app-n100: #f5f5f5;
+  --app-n200: #e5e5e5;
+  --app-n300: #d4d4d4;
+  --app-n400: #a3a3a3;
+  --app-n500: #737373;
+  --app-n600: #525252;
+  --app-n700: #404040;
+  --app-n800: #262626;
+  --app-n900: #171717;
+  --app-n950: #0a0a0a;
+  --app-border-w: 2px;
+  --app-radius-md: 0.5rem;
+  --app-radius-lg: 0.75rem;
+  --app-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  --app-shadow-sm: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+  --app-shadow-lg: 8px 8px 0px 0px rgba(0, 0, 0, 1);
+  /* neo 是方角硬阴影，bento 只跟着收小，不跟出营销页的大圆角 */
+  --app-radius-bento: 12px;
+  --app-radius-inset: 8px;
+  --app-chart-3: #b45309;
+  --app-chart-4: #be185d;
+  --app-chart-5: #0f766e;
+  --app-sel-bg: #ffffff;
+  --app-sel-ink: #111111;
+  --app-sel-border: #111111;
+  --app-sel-shadow: var(--app-shadow-sm);
+  --app-press: 2px;
+  --app-focus-ring: 0 0 0 2px #111111;
+  --app-scrim: rgb(17 17 17 / 0.35);
+
+  --app-field-border-focus: #111111;
+  --app-field-ring: 0 0 0 2px #111111;
+  --app-field-placeholder: #9a9080;
+}
+
+/* 暗色创意（liblib 风） */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --app-canvas: #101014;
+  --app-surface: #17171d;
+  --app-surface-2: #1e1e26;
+  --app-skeleton: #26262f;
+  --app-skeleton-sheen: rgba(255, 255, 255, 0.1);
+  --app-line: #2b2b35;
+  --app-line-strong: #3a3a46;
+  --app-ink: #ececf1;
+  --app-ink-2: #b0b0ba;
+  --app-ink-3: #8a8a96;
+  --app-accent: #8f87e8;
+  --app-accent-hover: #afa9ec;
+  --app-accent-soft: #26215c;
+  --app-accent-ink: #ffffff;
+  --app-tint-yellow: #3a3324;
+  --app-tint-green: #22332a;
+  --app-tint-pink: #3a2630;
+  --app-tint-blue: #1e2f42;
+  --app-tint-purple: #2c2840;
+  --app-tone-idle: #2b2b35;
+  --app-tone-creating: #4a3d1e;
+  --app-tone-ready: #1e3a52;
+  --app-tone-publishing: #332e52;
+  --app-tone-published: #1f3d2c;
+  --app-tone-failed: #42252e;
+  --app-danger-text: #f87171;
+  --app-success-text: #4ade80;
+  --app-danger-soft: #2a1a1e;
+  --app-success-soft: #16281e;
+  --app-n50: #1c1c22;
+  --app-n100: #23232b;
+  --app-n200: #2e2e38;
+  --app-n300: #3a3a46;
+  --app-n400: #6a6a76;
+  --app-n500: #8a8a96;
+  --app-n600: #a8a8b4;
+  --app-n700: #c4c4ce;
+  --app-n800: #e2e2e8;
+  --app-n900: #f0f0f4;
+  --app-n950: #f7f7fa;
+  --app-border-w: 1px;
+  --app-radius-md: 8px;
+  --app-radius-lg: 12px;
+  --app-shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+  --app-shadow-sm: none;
+  --app-shadow-lg: 0 8px 24px rgb(0 0 0 / 0.5);
+  --app-radius-bento: 20px;
+  --app-radius-inset: 14px;
+  --app-chart-3: #fbbf24;
+  --app-chart-4: #f472b6;
+  --app-chart-5: #2dd4bf;
+  --app-sel-bg: var(--app-surface-2);
+  --app-sel-ink: var(--app-ink);
+  --app-sel-border: transparent;
+  --app-sel-shadow: none;
+  --app-press: 0px;
+  --app-focus-ring: 0 0 0 1px var(--app-accent);
+  --app-scrim: rgb(0 0 0 / 0.62);
+
+  /* 暗色画布近乎纯黑，白卡边框叠白卡会糊成一片；搜索框改无边填充 */
+  --app-field-bg: var(--app-surface-2);
+  --app-field-bg-focus: #23232b;
+  --app-field-border: transparent;
+  --app-field-border-focus: #4d4d5b;
+  --app-field-placeholder: #6f6f7c;
+}
+
+/* ==================== Tailwind 主题映射 ====================
+   语义工具类（新视图用）：bg-canvas / bg-surface / text-ink / border-line / bg-accent …
+   兼容层（旧视图用）：bg-neo-yellow / border-black / bg-white / text-neutral-600 /
+   shadow-neo / bg-tone-* / bg-red-50 … 全部改走上面的主题变量。
+   注意：工具类解析到 --color-*，组件层一律直接引用 --app-*（不依赖是否被工具类用到）。 */
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* 字号阶梯（2026-10-28 密度规范）：层级只靠字号与灰度，不靠边框和底色堆。
+     一屏只允许一处 text-h1；区块标题用 text-section，读数用 text-metric。 */
+  --text-h1: 1.5rem;
+  --text-h1--line-height: 2rem;
+  --text-h1--font-weight: 600;
+  --text-h1--letter-spacing: -0.01em;
+  --text-section: 0.875rem;
+  --text-section--line-height: 1.25rem;
+  --text-section--font-weight: 600;
+  --text-metric: 1.625rem;
+  --text-metric--line-height: 2rem;
+  --text-metric--font-weight: 600;
+  --text-metric-sm: 1rem;
+  --text-metric-sm--line-height: 1.5rem;
+  --text-metric-sm--font-weight: 600;
+  --text-aux: 0.75rem;
+  --text-aux--line-height: 1rem;
+
+  /* bento 读数阶梯：一屏只允许两处 text-hero（粉丝、播放），
+     卡口计数用 hero-sm，其余一律回到 text-metric 以下。等宽数字才压得住 40px */
+  --text-hero: 2.5rem;
+  --text-hero--line-height: 1;
+  --text-hero--font-weight: 500;
+  --text-hero--letter-spacing: -0.04em;
+  --text-hero-sm: 1.75rem;
+  --text-hero-sm--line-height: 1;
+  --text-hero-sm--font-weight: 500;
+  --text-hero-sm--letter-spacing: -0.03em;
+
+  --color-canvas: var(--app-canvas);
+  --color-surface: var(--app-surface);
+  --color-surface-2: var(--app-surface-2);
+  --color-line: var(--app-line);
+  --color-line-strong: var(--app-line-strong);
+  --color-ink: var(--app-ink);
+  --color-ink-2: var(--app-ink-2);
+  --color-ink-3: var(--app-ink-3);
+  --color-field-placeholder: var(--app-field-placeholder);
+  --color-accent: var(--app-accent);
+  --color-accent-hover: var(--app-accent-hover);
+  --color-accent-soft: var(--app-accent-soft);
+  --color-accent-ink: var(--app-accent-ink);
+
+  --color-neo-bg: var(--app-canvas);
+  --color-neo-paper: var(--app-surface);
+  --color-neo-yellow: var(--app-tint-yellow);
+  --color-neo-green: var(--app-tint-green);
+  --color-neo-pink: var(--app-tint-pink);
+  --color-neo-blue: var(--app-tint-blue);
+  --color-neo-purple: var(--app-tint-purple);
+
+  --color-black: var(--app-ink);
+  --color-white: var(--app-surface);
+
+  --color-tone-idle: var(--app-tone-idle);
+  --color-tone-creating: var(--app-tone-creating);
+  --color-tone-ready: var(--app-tone-ready);
+  --color-tone-publishing: var(--app-tone-publishing);
+  --color-tone-published: var(--app-tone-published);
+  --color-tone-failed: var(--app-tone-failed);
+
+  --color-neutral-50: var(--app-n50);
+  --color-neutral-100: var(--app-n100);
+  --color-neutral-200: var(--app-n200);
+  --color-neutral-300: var(--app-n300);
+  --color-neutral-400: var(--app-n400);
+  --color-neutral-500: var(--app-n500);
+  --color-neutral-600: var(--app-n600);
+  --color-neutral-700: var(--app-n700);
+  --color-neutral-800: var(--app-n800);
+  --color-neutral-900: var(--app-n900);
+  --color-neutral-950: var(--app-n950);
+
+  --color-red-50: var(--app-danger-soft);
+  --color-red-600: var(--app-danger-text);
+  --color-red-700: var(--app-danger-text);
+  --color-red-800: var(--app-danger-text);
+  --color-green-50: var(--app-success-soft);
+  --color-green-700: var(--app-success-text);
+
+  /* 成功态的语义名（新界面用这两个，别再借 Tailwind 的 green-*） */
+  --color-success: var(--app-success-text);
+  --color-success-soft: var(--app-success-soft);
+
+  --shadow-neo: var(--app-shadow);
+  --shadow-neo-sm: var(--app-shadow-sm);
+  --shadow-neo-lg: var(--app-shadow-lg);
+
+  --radius-bento: var(--app-radius-bento);
+  --radius-inset: var(--app-radius-inset);
+  --color-chart-1: var(--app-chart-1);
+  --color-chart-2: var(--app-chart-2);
+  --font-metric: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  /* 14px 是 Buffer/Notion 一脉的正文基准；层级靠字号与灰度，不靠密集小字 */
+  font-size: 14px;
+  background-color: var(--app-canvas);
+  color: var(--app-ink);
+  margin: 0;
+  padding: 0;
+  /* PingFang SC 最粗只到 Semibold，900 会让浏览器合成假粗、标题发糊 */
+  font-synthesis-weight: none;
+}
+
+/* 浅色那档给背景一层光源：画布顶部一团冷光，点阵集中在上半、往下淡出。
+   均匀铺满等于没有光源，整页就平；暗色不用这层——暗底上点阵自己就在发光。 */
+[data-theme="pro"] .app-bg {
+  background-image: radial-gradient(110% 55% at 50% -12%, var(--app-accent-soft) 0%, transparent 62%);
+}
+
+[data-theme="pro"] .app-bg canvas {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.45) 50%, transparent 80%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.45) 50%, transparent 80%);
+}
+
+/* 标题默认色/字重放进 base 层：未分层的裸规则优先级高过 Tailwind 的 utilities 层，
+   会把 text-*、font-* 这些工具类整个压掉（封面卡压在深色照片上的白字标题就是这么变黑的）。 */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: var(--app-ink);
+  }
+}
+
+/* 键盘焦点：全站可见环。表单控件一律跳过——
+   .input / .neo-input 自己在 :focus 里画「边框变色 + 柔光」，对话卡里的裸文本框靠所在卡的
+   focus-within 变色，这里再套一圈 outline 就成了卡中卡的双框，而且 outline 的 4px 圆角会让
+   框子聚焦时跳形。文本框被鼠标点进来也算 :focus-visible，所以只能在源头排掉。
+   排掉 input/textarea 后，原来那条「卡片内 textarea 不上环」的补丁天然被覆盖，已删。 */
+:not(input):not(textarea):not(.input):not(.neo-input):focus-visible {
+  outline: 2px solid var(--app-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 尊重系统的「减弱动态效果」 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==================== 组件类 ====================
+   新视图用 .card / .btn / .chip / .seg / .input / .modal；
+   旧视图的 .neo-* 与之并列定义（选择器分组，行为一致），迁移时逐个换名即可。
+   放进 @layer components：Tailwind 工具类在 utilities 层，特异性更高，
+   这样 text-sm、flex-1 等才能正常覆盖组件默认值。 */
+@layer components {
+  .card,
+  .neo-card {
+    background: var(--app-surface);
+    border: var(--app-border-w) solid var(--app-line);
+    border-radius: var(--app-radius-lg);
+    box-shadow: var(--app-shadow);
+    padding: 1.25rem;
+  }
+
+  /* ==================== bento（看板 2026-11-01）====================
+     一卡一件事，大小卡咬在同一个 12 栅格里；卡内再嵌一层图表面板，
+     面板比卡更方（同心圆角）。画布点阵只铺看板，不动全站外壳。 */
+  .bento {
+    position: relative;
+    overflow: hidden;
+    background: var(--app-surface);
+    border: var(--app-border-w) solid var(--app-line);
+    border-radius: var(--app-radius-bento);
+    box-shadow: var(--app-shadow);
+    padding: 1.25rem;
+  }
+
+  .bento-inset {
+    position: relative;
+    overflow: hidden;
+    background: var(--app-surface-2);
+    border: var(--app-border-w) solid var(--app-line);
+    border-radius: var(--app-radius-inset);
+  }
+
+  .bento-canvas {
+    background-image: radial-gradient(
+      circle,
+      color-mix(in oklab, var(--app-ink) 7%, transparent) 0 1px,
+      transparent 1.4px
+    );
+    background-size: 20px 13px;
+    background-position: -6px -1px;
+  }
+
+  .bento-enter {
+    animation: bento-in 0.55s cubic-bezier(0.2, 0.9, 0.25, 1) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+
+  @keyframes bento-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .btn,
+  .neo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    border: var(--app-border-w) solid var(--app-line-strong);
+    border-radius: var(--app-radius-md);
+    background: var(--app-surface);
+    box-shadow: var(--app-shadow-sm);
+    padding: 0.5rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--app-ink);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    white-space: nowrap;
+  }
+
+  .btn:hover,
+  .neo-btn:hover {
+    background: var(--app-surface-2);
+    border-color: var(--app-ink-3);
+  }
+
+  .btn:active,
+  .neo-btn:active {
+    transform: translate(var(--app-press), var(--app-press));
+    box-shadow: none;
+  }
+
+  /* 主动作：全站唯一强调色（neo 主题下 = 黑） */
+  .btn-primary {
+    background: var(--app-accent);
+    border-color: var(--app-accent);
+    color: var(--app-accent-ink);
+  }
+
+  .btn-primary:hover {
+    background: var(--app-accent-hover);
+    border-color: var(--app-accent-hover);
+  }
+
+  /* AI 生成主动作（一键同款）：紫胶囊，压在封面上也要站得住，所以自带阴影不靠边框 */
+  .btn-ai {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 0;
+    border-radius: 9999px;
+    background: var(--app-ai);
+    color: var(--app-ai-ink);
+    padding: 0 1.125rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px -6px rgb(0 0 0 / 0.3);
+    transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn-ai:hover {
+    background: var(--app-ai-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px -6px rgb(0 0 0 / 0.32);
+  }
+
+  .btn-ai:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  .btn-ai:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .btn-ai:disabled:hover {
+    background: var(--app-ai);
+    transform: none;
+  }
+
+  .btn-danger {
+    background: var(--app-danger-text);
+    border-color: var(--app-danger-text);
+    color: #ffffff;
+  }
+
+  /* 旧语义按钮：黄=主动作 / 绿=成 / 粉=败 / 蓝=信息，跟随主题 tint */
+  .neo-btn-primary { background: var(--app-tint-yellow); }
+  .neo-btn-success { background: var(--app-tint-green); }
+  .neo-btn-danger  { background: var(--app-tint-pink); }
+  .neo-btn-info    { background: var(--app-tint-blue); }
+
+  /* 安静版动作：无框无底，hover 才浮现 */
+  .btn-ghost,
+  .neo-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    border: 0;
+    border-radius: var(--app-radius-md);
+    background: transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--app-ink-2);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    white-space: nowrap;
+  }
+
+  .btn-ghost:hover,
+  .neo-btn-ghost:hover {
+    background: var(--app-surface-2);
+    color: var(--app-ink);
+  }
+
+  .btn:disabled,
+  .neo-btn:disabled,
+  .btn-ghost:disabled,
+  .neo-btn-ghost:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .btn:disabled:hover,
+  .neo-btn:disabled:hover,
+  .btn-ghost:disabled:hover,
+  .neo-btn-ghost:disabled:hover {
+    transform: none;
+    box-shadow: var(--app-shadow-sm);
+    background: var(--app-surface);
+    border-color: var(--app-line-strong);
+    color: var(--app-ink-2);
+  }
+
+  .btn-primary:disabled:hover { background: var(--app-accent); border-color: var(--app-accent); }
+  .neo-btn-primary:disabled:hover { background: var(--app-tint-yellow); }
+  .neo-btn-ghost:disabled:hover { background: transparent; color: var(--app-ink-2); }
+
+  .chip,
+  .neo-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border: var(--app-border-w) solid var(--app-line-strong);
+    border-radius: 9999px;
+    padding: 0.125rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: var(--app-surface);
+    color: var(--app-ink);
+    white-space: nowrap;
+  }
+
+  /* 选中态只有一套语言：强调浅底 + 强调字（neo 主题下 = 白底黑框硬阴影）。
+     页签、筛选胶囊、分段控件、开关全用它。
+     四个属性全带 !important：组件层默认打不过同元素上的 font-bold / shadow-* 工具类。 */
+  .is-selected {
+    border-color: var(--app-sel-border) !important;
+    background: var(--app-sel-bg) !important;
+    color: var(--app-sel-ink) !important;
+    font-weight: 500 !important;
+    box-shadow: var(--app-sel-shadow) !important;
+  }
+
+  /* 开关打开 / 面板展开：给它「按下去」的样子 */
+  .is-on {
+    background: var(--app-sel-bg) !important;
+    box-shadow: none !important;
+    transform: translate(var(--app-press), var(--app-press));
+  }
+
+  /* 筛选胶囊的未选态：无边框、灰字。选中一律换 .is-selected */
+  .seg,
+  .neo-seg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    border: var(--app-border-w) solid transparent;
+    border-radius: var(--app-radius-md);
+    padding: 0.375rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--app-ink-2);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    white-space: nowrap;
+  }
+
+  .seg:hover,
+  .neo-seg:hover {
+    color: var(--app-ink);
+    background: var(--app-surface-2);
+  }
+
+  /* 页签（2026-11-01 版式照即创素材库顶栏）：无底无框，选中只换两件事——
+     字变亮变粗 + 字下一条居中的强调色短杠。未选灰字，悬停提到正文色。
+     和 .seg 的分工：切「看哪一份内容」用这套，筛「列出哪些条目」仍用胶囊。
+     站内大页签用默认档；卡片栏头里的小页签加 .utab-sm（短杠跟着缩，否则两颗字压不住一条杠）。 */
+  .utab {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.9375rem;
+    line-height: 1.2;
+    color: var(--app-ink-2);
+    cursor: pointer;
+    transition: color 0.12s ease;
+    white-space: nowrap;
+  }
+
+  .utab:hover {
+    color: var(--app-ink);
+  }
+
+  .utab.is-active {
+    color: var(--app-ink);
+    font-weight: 600;
+  }
+
+  /* 短杠常驻：未选时透明占位，切换选中不至于让整行字上下跳 */
+  .utab-mark {
+    width: 28px;
+    height: 4px;
+    border-radius: 9999px;
+    background: var(--app-accent);
+    opacity: 0;
+  }
+
+  .utab.is-active .utab-mark {
+    opacity: 1;
+  }
+
+  .utab-sm {
+    font-size: 0.875rem;
+    gap: 5px;
+  }
+
+  .utab-sm .utab-mark {
+    width: 18px;
+    height: 3px;
+  }
+
+  /* 发布日历的状态条与状态点：--app-tone-* 是芯片底色，暗皮肤上近乎隐形，
+     这一处要的是「一眼看出发没发」的细条与小点，改用同族里最亮的那档文字色。 */
+  .cal-published { background: var(--app-success-text); }
+  .cal-draft     { background: var(--app-accent); }
+  .cal-pending   { background: var(--app-ink-3); }
+  .cal-overdue   { background: var(--app-danger-text); }
+
+  /* 站内吸顶工具条（收集站五页共用，版式照即创素材库顶栏）：贴住页签条下沿，
+     -mx-8 铺满内容列、底色走画布令牌，卡片与表格从它底下滚过去不露馅。
+     两行内容：第一行搜索 + 页面动作，第二行左排序右筛选。 */
+  .station-toolbar {
+    position: sticky;
+    top: var(--station-tabs-h, 68px);
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-inline: -2rem;
+    padding: 0.75rem 2rem 1rem;
+    background: var(--app-canvas);
+  }
+
+  /* 焦点卡口：一屏三个动作里「现在就差这一步」的那个 */
+  .is-focus {
+    border-color: var(--app-accent) !important;
+    box-shadow: var(--app-focus-ring), var(--app-shadow) !important;
+  }
+
+  .input,
+  .neo-input {
+    border: var(--app-border-w) solid var(--app-line-strong);
+    border-radius: var(--app-radius-md);
+    background: var(--app-surface);
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: var(--app-ink);
+  }
+
+  .input::placeholder,
+  .neo-input::placeholder {
+    color: var(--app-ink-3);
+  }
+
+  /* 焦点只留一层环。文本框被点击时浏览器也算 focus-visible，
+     原来 :focus 的 box-shadow 和 :focus-visible 的 outline 会同时命中，叠成两圈粗边。 */
+  .input:focus,
+  .neo-input:focus {
+    outline: none;
+    border-color: var(--app-accent);
+    box-shadow: var(--app-focus-ring);
+  }
+
+  /* 搜索框：无边填充 + 图标在左。焦点只描一条发丝边，柔光会把它顶成工具栏里最抢眼的东西。
+     字号比同行页签、筛选小一档，占位词和放大镜都退到 placeholder 档。 */
+  .input-search {
+    border-color: var(--app-field-border);
+    background: var(--app-field-bg);
+    font-size: 0.8125rem;
+    transition: background 0.12s ease, border-color 0.12s ease;
+  }
+
+  .input-search::placeholder {
+    color: var(--app-field-placeholder);
+  }
+
+  .input-search:hover {
+    background: var(--app-field-bg-focus);
+  }
+
+  .input-search:focus,
+  .input-search:focus-visible {
+    outline: none;
+    border-color: var(--app-field-border-focus);
+    background: var(--app-field-bg-focus);
+    /* .input:focus 那条 accent 环还在，不显式清掉就只剩一条边变细 */
+    box-shadow: var(--app-field-ring);
+  }
+
+  /* 图未到货的那块占位：底色比卡面暗一档，一道亮光横着扫过去。
+     卡片必须先靠它占住高度——<img> 没到货时高 0，整卡会塌成一条 2px 灰线。 */
+  .cover-skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--app-skeleton);
+  }
+
+  .cover-skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 20%, var(--app-skeleton-sheen) 50%, transparent 80%);
+    transform: translateX(-100%);
+    animation: skeleton-sweep 1.2s ease-in-out infinite;
+  }
+
+  @keyframes skeleton-sweep {
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  /* 弹窗外壳。尺寸一律以视口为准：遮罩层用 inset:0 + padding 定出「可用盒子」，
+     卡片的 max-width / max-height 都按这个盒子的内容框算，滚动交给卡片内部。
+     压栈高度是有梯子的：页签条 40 < 详情抽屉 2000 < 贴边浮窗 2040/2050 < 弹层 2100 < 居中弹层 2110 < 轻提示 2120。
+     抽屉（2000）比弹层低是必须的：爆款采集要在抽屉里盖一层「克隆爆款视觉」，
+     弹层压在它底下时 DOM 里查得到、屏上看不见（2026-11-04 实测）。 */
+  .modal,
+  .neo-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2100;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* 遮罩色走令牌：bg-black 被映射成 --app-ink，暗色主题下会翻成一层白纱 */
+    background: var(--app-scrim);
+    padding: clamp(1rem, 5vh, 3.5rem) 1rem 1rem;
+  }
+
+  /* 矮内容（确认框、扫码框）垂直居中 */
+  .modal--center,
+  .neo-modal--center {
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .modal-card,
+  .neo-modal-card {
+    width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  /* 图标按钮的悬浮名字气泡（侧栏折叠后整条都是图标）。挂 in body 上：
+     侧栏自己 overflow-hidden，气泡留在侧栏里会被裁掉。 */
+  .nav-tip {
+    position: fixed;
+    z-index: 60;
+    transform: translateY(-50%);
+    pointer-events: none;
+    white-space: nowrap;
+    padding: 0.25rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--app-ink);
+    background: var(--app-surface);
+    border: var(--app-border-w) solid var(--app-line);
+    border-radius: var(--app-radius-md);
+    box-shadow: var(--app-shadow-lg);
+  }
+
+  .modal-body,
+  .neo-modal-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+/* 状态色：六态各一色，色值一律走 --app-tone-* 令牌（组件里不许写死 hex） */
+.status-not-start  { background: var(--app-tone-idle); }
+.status-creating   { background: var(--app-tone-creating); }
+.status-ready      { background: var(--app-tone-ready); }
+.status-publishing { background: var(--app-tone-publishing); }
+.status-published  { background: var(--app-tone-published); }
+.status-failed     { background: var(--app-tone-failed); }
+
+/* 分镜逐句控件（.line-ctrl）：桌面静止收起，鼠标悬停或键盘落到那一行才现身；
+   触屏没有悬停这回事，改成点句子选中那一行才现身。未分层，优先级压过 Tailwind 的 @layer utilities。 */
+.line-ctrl {
+  transition: opacity 0.15s ease;
+}
+
+@media (hover: hover) {
+  .line-ctrl--quiet {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .line-row:hover .line-ctrl--quiet,
+  .line-row:focus-within .line-ctrl--quiet {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (hover: none) {
+  .line-ctrl--quiet {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .line-row.is-touched {
+    border-color: var(--app-line-strong);
+  }
+
+  .line-row.is-touched .line-ctrl--quiet {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* 图标全站一套：lucide 只有描边，描边粗细随尺寸反比（规矩见 AGENTS.md「图标只用 Lucide」）。
+   模板里只写 :size，档位 13/15/18/22/28；粗细在这里锁死，改一处就全站生效。 */
+svg.lucide {
+  stroke-width: 1.75;
+}
+svg.lucide[width='13'] {
+  stroke-width: 2;
+}
+svg.lucide[width='22'],
+svg.lucide[width='28'] {
+  stroke-width: 1.5;
+}

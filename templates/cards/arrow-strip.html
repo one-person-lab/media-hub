@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+  }
+
+  /* 左侧一条竖色带，小标竖排压在带上 */
+  .band {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 132px;
+    background: var(--accent, #FAE79B);
+    color: var(--accent-ink, #111);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .band .k {
+    writing-mode: vertical-rl;
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: .42em;
+  }
+  .band .k:empty { display: none; }
+
+  .wrap { padding: 96px 96px 0 212px; }
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--surface-2, #F2EADA);
+    font-size: 24px;
+    letter-spacing: .3em;
+    color: var(--ink-3, #9A917C);
+  }
+
+  .tag { margin: 84px 0 66px; }
+  .tag .ln { display: block; }
+  .tag b {
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 128px;
+    font-weight: 700;
+    line-height: 1.14;
+  }
+  .tag b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); padding: 0 18px; }
+  .tag b.pale { color: var(--ink-2b, #3A3529); }
+
+  /* 收尾的两三句：箭头当前缀，句间一条细线 */
+  .line {
+    position: relative;
+    padding: 40px 0 40px 62px;
+    border-top: 1px solid var(--surface-2, #F2EADA);
+    font-size: 46px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  .line::before {
+    content: "\2192";
+    position: absolute;
+    left: 0;
+    top: 40px;
+    font-size: 44px;
+    color: var(--accent-deep, #A08A5A);
+  }
+  .line .em { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); padding: 0 8px; }
+  .line .src { font-weight: 500; color: var(--ink-3, #9A917C); font-size: 34px; }
+
+  .cta {
+    margin-top: 76px;
+    display: inline-block;
+    padding: 22px 40px;
+    background: var(--ink, #111);
+    color: var(--page, #FFFDF8);
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: .04em;
+  }
+  .cta:empty { display: none; }
+</style>
+</head>
+<body>
+  <div class="band"><span class="k">__KICKER__</span></div>
+  <div class="wrap">
+    <div class="head"><span>__BRAND__</span><span>__PAGENO__</span></div>
+    <div class="tag">__HEAD__</div>
+    <div class="rows">__ROWS__</div>
+    <div class="cta">__CTA__</div>
+  </div>
+  <div class="foot"><span>__BRAND__</span></div>
+</body>
+</html>

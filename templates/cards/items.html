@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+  }
+  .wrap { padding: 118px 96px 0; }
+
+  /* 每页一句核心判断压在色块上；不写 title 的页整块不占位 */
+  .tag:empty { display: none; }
+  .tag { margin-bottom: 66px; }
+  .tag .ln { display: block; }
+  .tag b { font-size: 62px; font-weight: 800; line-height: 1.62; }
+  .tag b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); padding: 4px 14px; }
+  .tag b.pale { background: var(--surface-2, #F2EADA); padding: 4px 14px; }
+
+  .item { margin-bottom: __GAP__; }
+  .item .zh { font-size: __ZH__; font-weight: 700; line-height: 1.5; }
+  .item .zh .src { font-weight: 500; }
+  .item .en {
+    margin-top: 20px;
+    font-size: __EN__;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  .foot {
+    position: absolute;
+    left: 96px;
+    right: 96px;
+    bottom: 62px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 28px;
+    color: var(--ink-3, #9A917C);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap"><div class="tag">__TITLE__</div>__ROWS__</div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

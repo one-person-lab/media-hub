@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background:
+      radial-gradient(940px 660px at 12% -6%, rgba(244,199,124,.11) 0%, rgba(244,199,124,0) 66%),
+      radial-gradient(820px 620px at 100% 88%, rgba(107,197,240,.07) 0%, rgba(107,197,240,0) 70%),
+      linear-gradient(160deg, #0a1220 0%, #101927 58%, #0a1220 100%);
+    color: #f4f7fb;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    overflow: hidden; position: relative;
+  }
+
+  .head { position: absolute; left: 88px; right: 88px; top: 92px; }
+  .kicker { font-size: 28px; letter-spacing: 3px; color: #f4c77c; }
+  .title { margin-top: 18px; }
+  .title .ln { display: block; }
+  .title b { font-size: __ZH__; line-height: 1.26; font-weight: 900; letter-spacing: -2px; }
+  .title b.hot { color: #f4f7fb; }
+  .title b.pale { color: #f4c77c; }
+  .echo { margin-top: 18px; font-size: 32px; color: rgba(244,247,251,.52); }
+  .echo b.em { color: #f4f7fb; font-weight: 700; }
+  .tag {
+    display: inline-block; margin-top: 18px; font-size: 22px; font-weight: 800; letter-spacing: 1px;
+    color: #14202f; background: #6fd3b8; border-radius: 999px; padding: 8px 18px;
+  }
+  .tag:empty { display: none; }
+
+  .grid {
+    position: absolute; left: 88px; right: 88px; top: 468px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .cell {
+    position: relative; height: 214px; border-radius: 26px; overflow: hidden;
+    background: linear-gradient(150deg, rgba(255,255,255,.075), rgba(255,255,255,.028));
+    border: 2px solid rgba(255,255,255,.08);
+    padding: 30px 30px 26px 34px; display: flex; align-items: center; gap: 26px;
+  }
+  .cell::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 8px; background: var(--accent, #f4c77c); }
+  .emoji { font-size: 62px; line-height: 1; flex: 0 0 auto; }
+  .name { font-size: 40px; font-weight: 800; letter-spacing: -1px; color: #f4f7fb; }
+  .meta { margin-top: 12px; font-size: 24px; font-weight: 600; color: var(--accent, #f4c77c); }
+  .meta b.em { color: var(--accent, #f4c77c); }
+
+  .t1 { --accent: #ff8f82; }
+  .t2 { --accent: #f4c77c; }
+  .t3 { --accent: #6fd3b8; }
+  .t4 { --accent: #9db4d6; }
+  .t5 { --accent: #f4c77c; }
+  .t6 { --accent: #ff9d6e; }
+  .t7 { --accent: #e8c6ff; }
+  .t8 { --accent: #ffe27a; }
+
+  .foot {
+    position: absolute; left: 88px; right: 88px; bottom: 52px;
+    display: flex; justify-content: space-between; font-size: 26px; color: rgba(244,247,251,.36);
+  }
+</style>
+</head>
+<body>
+  <div class="head">
+    <div class="kicker">__KICKER__</div>
+    <div class="title">__TITLE__</div>
+    <div class="echo">__ECHO__</div>
+    <div class="tag">__TAG__</div>
+  </div>
+  <div class="grid">__CELLS__</div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

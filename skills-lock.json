@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "skills": {
+    "clone-website": {
+      "source": "JCodesMore/ai-website-cloner-template",
+      "ref": "master",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/clone-website/SKILL.md",
+      "computedHash": "674e9badc4689600170118d221f830740bd2be10bb60bcfbda693e5f214b6c86"
+    },
+    "openfilm": {
+      "source": "openfilm/openfilm",
+      "ref": "main",
+      "sourceType": "github",
+      "skillPath": "skills/openfilm/SKILL.md",
+      "computedHash": "a30f15632ebb29295dfff7131faf2c212e17f2bae2918a87ef0f716dcca8a157"
+    }
+  }
+}

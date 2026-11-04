@@ -1,0 +1,789 @@
+{
+  "_说明": "视频模板目录（素材库·视频分区读这份）。一条模板 = 一个已存在的 Remotion composition：它拍得出成片、改得了文案、换得了素材，才算一条；只有想法没落过代码的不进这里。与图文模板不同，视频模板的槽位现在仍写在各项目代码里（copy.ts / narration.json / workbench.ts），这份 json 只登记「槽在哪、要什么素材、怎么渲」，界面上据此给出可复制的渲染命令与改词入口，不假装能在线改。",
+  "_状态": "ready=有成片、有小样；needs-asset=代码在但缺素材渲不出；needs-render=代码在、素材在，只是本机还没渲过。",
+  "default": "mh-value",
+  "templates": [
+    {
+      "key": "mh-value",
+      "label": "价值主张片 · 真录屏 + 立场字卡",
+      "kind": "价值片",
+      "composition": "MediaHubValue",
+      "project": "videos/promo-video-mediahub",
+      "fps": 30,
+      "size": "1920x1080",
+      "durationSec": 69,
+      "poster": "/videos/templates/mh-value.png",
+      "preview": "/videos/templates/mh-value-preview.mp4",
+      "film": "videos/promo-video-mediahub/out/mediahub-value.mp4",
+      "render": "cd videos/promo-video-mediahub && npm run render:value",
+      "slots": [
+        {
+          "at": "src/value/copy.ts",
+          "what": "CARDS 三张立场字卡、DEMOS 七站标题与说明、T 品牌落版"
+        },
+        {
+          "at": "src/value/Main.tsx 的 VALUE_SHOTS",
+          "what": "每一镜的起止帧（改时长就改这里）"
+        },
+        {
+          "at": "public/textures/live/*",
+          "what": "七站真录屏帧，来自受控浏览器截图，不许用外部素材顶"
+        },
+        {
+          "at": "inputProps.bgm",
+          "what": "要不要背景音乐：--props='{\"bgm\":false}' 出一版无 BGM 的"
+        }
+      ],
+      "status": "ready",
+      "order": 1,
+      "pick": "69 秒讲完「内容=文件」这一件事，全程不缩放镜头、功能段一律真录屏——这类片子的说服力全在「这就是它本来的样子」，拿动效 mock 顶上去观众一眼就看出来。适合一条产品线的长期主页片。"
+    },
+    {
+      "key": "mh-tour",
+      "label": "功能走查 · 录屏 + 大字幕 + 口播",
+      "kind": "走查",
+      "composition": "MediaHubTour",
+      "project": "videos/promo-video-mediahub",
+      "fps": 30,
+      "size": "1920x1080",
+      "durationSec": 115,
+      "poster": "/videos/templates/mh-tour.png",
+      "preview": "/videos/templates/mh-tour-preview.mp4",
+      "film": "videos/promo-video-mediahub/out/mediahub-tour.mp4",
+      "render": "cd videos/promo-video-mediahub && npx remotion render src/index.ts MediaHubTour out/mediahub-tour.mp4",
+      "slots": [
+        {
+          "at": "src/tour/narration.json",
+          "what": "口播分段 segments、字幕 subtitles、fps 与 total——时间线全从它算，改稿子等于改节奏"
+        },
+        {
+          "at": "src/tour/Main.tsx 的 SHOTS",
+          "what": "每段配哪张录屏、相机停在哪"
+        },
+        {
+          "at": "public/audio/*",
+          "what": "口播分段 mp3，一段一个文件，文件名跟 segments 对齐"
+        }
+      ],
+      "status": "ready",
+      "order": 2,
+      "pick": "结构照一条同类爆款搭的（录屏打底 + 底部大字幕 + 主播位呼吸），115 秒能吃下五个功能点。走查片的风险是变成说明书，所以字幕必须写「这一步你在干什么」而不是「这个模块叫什么」。"
+    },
+    {
+      "key": "mh-promo",
+      "label": "品牌快闪 · 28 秒竖信息",
+      "kind": "快闪",
+      "composition": "MediaHubPromo",
+      "project": "videos/promo-video-mediahub",
+      "fps": 30,
+      "size": "1920x1080",
+      "durationSec": 28,
+      "poster": "/videos/templates/mh-promo.png",
+      "preview": "/videos/templates/mh-promo-preview.mp4",
+      "film": "public/videos/promo-mediahub.mp4",
+      "render": "cd videos/promo-video-mediahub && npx remotion render src/index.ts MediaHubPromo out/promo.mp4",
+      "slots": [
+        {
+          "at": "src/mh/copy.ts",
+          "what": "BRAND / KICKER / TAGLINE / CARD_1 字卡 / CAPTIONS_TEXT 三句图注；*包起来* 的字上强调色"
+        },
+        {
+          "at": "inputProps.theme",
+          "what": "整套视觉皮肤（themes/visual-theme，默认 ink-press），换皮不改代码"
+        },
+        {
+          "at": "public/textures/live/*",
+          "what": "界面实采纹理"
+        }
+      ],
+      "status": "ready",
+      "order": 3,
+      "pick": "28 秒、一句一个卡，是唯一一条能直接投信息流的长度。它靠 theme 换皮，所以同一支片子能出品牌版和深色版两条，不用重渲文案。"
+    },
+    {
+      "key": "buildhub-promo",
+      "label": "产品宣传片 · 四轨工作台版",
+      "kind": "价值片",
+      "composition": "BuildHubPromo",
+      "project": "videos/promo-video-buildhub",
+      "fps": 30,
+      "size": "1920x1080",
+      "durationSec": 158,
+      "poster": "/videos/templates/buildhub-promo.png",
+      "preview": "/videos/templates/buildhub-promo-preview.mp4",
+      "film": "public/videos/promo-buildhub.mp4",
+      "render": "cd videos/promo-video-buildhub && npm run render",
+      "slots": [
+        {
+          "at": "src/tour/narration.json",
+          "what": "九段口播的 segments/subtitles，片头黑场秒数在 timeline.ts 的 PREROLL"
+        },
+        {
+          "at": "src/workbench.ts",
+          "what": "镜头/字幕/角标/音频四条轨的清单——相机关键帧与光标路径不进面板，那是节奏命门"
+        },
+        {
+          "at": "src/live-layout.json + public/textures/bh-*",
+          "what": "每个镜贴哪张真截图、贴多大"
+        }
+      ],
+      "status": "ready",
+      "order": 4,
+      "pick": "2 分 38 秒，是目前最长的一条，也是唯一一条把「改哪一镜」登记成四条轨的——适合当模板库里的「结构参考」：想知道一条长片怎么分段、字幕怎么钉帧，看它。"
+    },
+    {
+      "key": "oss-promo",
+      "label": "开源宣传 · 横屏实录片",
+      "kind": "走查",
+      "composition": "OssPromo",
+      "project": "videos/promo-video-oss",
+      "fps": 30,
+      "size": "1920x1080",
+      "durationSec": 163,
+      "poster": "/videos/templates/oss-promo.png",
+      "preview": "/videos/templates/oss-promo-preview.mp4",
+      "film": "videos/promo-video-oss/out/promo-oss.mp4",
+      "render": "cd videos/promo-video-oss && npx remotion render src/index.ts OssPromo out/promo-oss.mp4 --video-encoder=libx264",
+      "slots": [
+        {
+          "at": "src/timeline.ts 的 SEG",
+          "what": "分段起止与时长，全片时间线由它推"
+        },
+        {
+          "at": "src/shots/*",
+          "what": "每段的画面组件"
+        }
+      ],
+      "status": "ready",
+      "order": 5,
+      "pick": "口径是「卖平台不卖 md」的那支：先给一句立场，再走界面。素材全走受控浏览器 CDP 2x 截图，不录桌面——录桌面会拍到别的东西，这条规矩就长在这支片子上。",
+      "note": "该项目 package.json 的 render 脚本还指着 AiflPromo（模板底片），要出这条得按上面的命令点名 OssPromo。"
+    },
+    {
+      "key": "smzs-promo",
+      "label": "竖屏口播 · 三档字号安全框",
+      "kind": "口播",
+      "composition": "SmzsPromo",
+      "project": "videos/promo-video-smzs",
+      "fps": 30,
+      "size": "1080x1920",
+      "durationSec": 0,
+      "poster": "",
+      "preview": "",
+      "film": "",
+      "render": "cd videos/promo-video-smzs && npm run render",
+      "slots": [
+        {
+          "at": "src/timeline.ts 的 SHOTS/SHOT_FROM",
+          "what": "镜头表与派生总帧数"
+        },
+        {
+          "at": "src/shots/*",
+          "what": "每镜画面，品牌色与字号安全框在 brand-kit.json"
+        },
+        {
+          "at": "videos/brand-kit.json",
+          "what": "全站品牌：色板、字号档位、落版 CTA、AI 标注"
+        }
+      ],
+      "status": "needs-render",
+      "order": 6,
+      "pick": "库里唯一的竖屏条：口播字幕 + 三档字号安全框，1080x1920 直接投抖音/视频号。代码与镜头表都在，本机还没渲过成片，所以只登记不给小样——等第一版渲出来再补 poster。"
+    },
+    {
+      "key": "viral-douyin-76685940",
+      "label": "65 秒口播 · 4.1 字/秒 · 每拍 2.3 秒",
+      "kind": "爆款结构",
+      "status": "active",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 65,
+      "order": 566901,
+      "source": {
+        "platform": "douyin",
+        "noteId": "7668594098173372145",
+        "title": "1/14｜建立表达系统练习 #表达能力 #自我提升 #方法分享#14天建立表达系统#铁血柔情止痛药",
+        "url": "https://www.douyin.com/video/7668594098173372145",
+        "likes": "56.6万",
+        "collects": "",
+        "comments": "",
+        "heat": 566000
+      },
+      "structure": {
+        "durationSec": 65,
+        "beats": 29,
+        "chars": 264,
+        "charsPerSec": 4.1,
+        "beatSec": 2.3,
+        "maxGap": 5,
+        "hookSec": 8,
+        "hookChars": 46,
+        "hookLines": 4,
+        "hookText": "天建立表达系统 刚才我刷到了一个这样的 视频 整体听下来我感觉还是挺 有用的 所以我立刻来录了这个视 频"
+      },
+      "pick": "逐字稿量出来的：65 秒 264 字（4.1 字/秒），29 拍、平均一拍 2.3 秒，最长一次停顿 5 秒；前 8 秒把钩子说完（46 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-douyin-76753057",
+      "label": "139 秒口播 · 7.4 字/秒 · 每拍 1.6 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 139,
+      "order": 456900,
+      "source": {
+        "platform": "douyin",
+        "noteId": "7675305737601436971",
+        "title": "未来，不过是无数个“今天的你”，共同写下的答案 #哲学 #心理学 #自我迭代 #成长 #人生规划",
+        "url": "https://www.douyin.com/video/7675305737601436971",
+        "likes": "45.6万",
+        "collects": "",
+        "comments": "",
+        "heat": 456000
+      },
+      "structure": {
+        "durationSec": 139,
+        "beats": 86,
+        "chars": 1024,
+        "charsPerSec": 7.4,
+        "beatSec": 1.6,
+        "maxGap": 4,
+        "hookSec": 8,
+        "hookChars": 54,
+        "hookLines": 6,
+        "hookText": "你无法规划自己的未来 你要规划的是今天的行为 而这些行为会创造你的未来 很參人焦虑 是因沩总想提前 知道自己的人生答桊"
+      },
+      "pick": "逐字稿量出来的：139 秒 1024 字（7.4 字/秒），86 拍、平均一拍 1.6 秒，最长一次停顿 4 秒；前 8 秒把钩子说完（54 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-douyin-76685945",
+      "label": "109 秒口播 · 7.7 字/秒 · 每拍 2.5 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 109,
+      "order": 367900,
+      "source": {
+        "platform": "douyin",
+        "noteId": "7668594516526482545",
+        "title": "选择悖论(Paradox of Choice)由美国心理学家巴里·施瓦茨(Barry Schwartz)于2004年同名著作中系统提出。其实证基础可追溯至希娜·",
+        "url": "https://www.douyin.com/video/7668594516526482545",
+        "likes": "36.7万",
+        "collects": "",
+        "comments": "",
+        "heat": 367000
+      },
+      "structure": {
+        "durationSec": 109,
+        "beats": 44,
+        "chars": 840,
+        "charsPerSec": 7.7,
+        "beatSec": 2.5,
+        "maxGap": 16,
+        "hookSec": 8,
+        "hookChars": 45,
+        "hookLines": 5,
+        "hookText": "炎谈话题 以牙还牙（友善策略胜 交谈话题 个R消 辛普森悖论 淡 父读请 赌场资金效应 交谈话题 选择悖论 下"
+      },
+      "pick": "逐字稿量出来的：109 秒 840 字（7.7 字/秒），44 拍、平均一拍 2.5 秒，最长一次停顿 16 秒；前 8 秒把钩子说完（45 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-douyin-76553346",
+      "label": "156 秒口播 · 4.7 字/秒 · 每拍 1.6 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 156,
+      "order": 315900,
+      "source": {
+        "platform": "douyin",
+        "noteId": "7655334609198058815",
+        "title": "不管你在哪上班一定要牢记这八个点 #认知 #思维 #女性",
+        "url": "https://www.douyin.com/video/7655334609198058815",
+        "likes": "31.5万",
+        "collects": "",
+        "comments": "",
+        "heat": 315000
+      },
+      "structure": {
+        "durationSec": 156,
+        "beats": 101,
+        "chars": 728,
+        "charsPerSec": 4.7,
+        "beatSec": 1.6,
+        "maxGap": 5,
+        "hookSec": 8,
+        "hookChars": 45,
+        "hookLines": 6,
+        "hookText": "不管你在什么地方上班啊 我说的以下8个点 你要是听懂的话 迟早能够成就 一番大的事业 就千万不要怪我"
+      },
+      "pick": "逐字稿量出来的：156 秒 728 字（4.7 字/秒），101 拍、平均一拍 1.6 秒，最长一次停顿 5 秒；前 8 秒把钩子说完（45 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-douyin-76638805",
+      "label": "258 秒口播 · 5.3 字/秒 · 每拍 1.8 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 258,
+      "order": 283900,
+      "source": {
+        "platform": "douyin",
+        "noteId": "7663880554709896443",
+        "title": "你可以刷视频，但你必须学会如何不把脑子刷废。 #心理学 #认知 #提升自己 #心理 #短视频",
+        "url": "https://www.douyin.com/video/7663880554709896443",
+        "likes": "28.3万",
+        "collects": "",
+        "comments": "",
+        "heat": 283000
+      },
+      "structure": {
+        "durationSec": 258,
+        "beats": 148,
+        "chars": 1369,
+        "charsPerSec": 5.3,
+        "beatSec": 1.8,
+        "maxGap": 6,
+        "hookSec": 8,
+        "hookChars": 35,
+        "hookLines": 3,
+        "hookText": "但你必须学会如何不把脑子刷废 本期视频只适合不希望自己变笨 成 废人的人观看"
+      },
+      "pick": "逐字稿量出来的：258 秒 1369 字（5.3 字/秒），148 拍、平均一拍 1.8 秒，最长一次停顿 6 秒；前 8 秒把钩子说完（35 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-douyin-76619977",
+      "label": "226 秒口播 · 7.6 字/秒 · 每拍 1.5 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 226,
+      "order": 256900,
+      "source": {
+        "platform": "douyin",
+        "noteId": "7661997758978477347",
+        "title": "过度幻想成功的自己，会直接损坏你的行动力，只需4个方法，就能彻底粉碎拖延，斩断空想。#女性成长 #女性智慧 #个人成长 #认知觉醒",
+        "url": "https://www.douyin.com/video/7661997758978477347",
+        "likes": "25.6万",
+        "collects": "",
+        "comments": "",
+        "heat": 256000
+      },
+      "structure": {
+        "durationSec": 226,
+        "beats": 151,
+        "chars": 1721,
+        "charsPerSec": 7.6,
+        "beatSec": 1.5,
+        "maxGap": 5,
+        "hookSec": 7,
+        "hookChars": 81,
+        "hookLines": 5,
+        "hookText": "会直接损坏你的行动力 会直接损坏你的行动力 士 会直接损坏你的行动内 只需4个方法 会直接损坏你的行动内 就能彻底粉碎拖延 会直接损坏你的行动力 斩断空想 不如留下斩断空想 这四个字"
+      },
+      "pick": "逐字稿量出来的：226 秒 1721 字（7.6 字/秒），151 拍、平均一拍 1.5 秒，最长一次停顿 5 秒；前 7 秒把钩子说完（81 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-douyin-76674494",
+      "label": "276 秒口播 · 5.3 字/秒 · 每拍 1.6 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 276,
+      "order": 189802,
+      "source": {
+        "platform": "douyin",
+        "noteId": "7667449465455840550",
+        "title": "普通家庭没教：人生是可以被设计出来的 #个人成长 #财富思维 #人生规划",
+        "url": "https://www.douyin.com/video/7667449465455840550",
+        "likes": "9.4万",
+        "collects": "4.5万",
+        "comments": "1634",
+        "heat": 188902
+      },
+      "structure": {
+        "durationSec": 276,
+        "beats": 170,
+        "chars": 1461,
+        "charsPerSec": 5.3,
+        "beatSec": 1.6,
+        "maxGap": 3,
+        "hookSec": 8,
+        "hookChars": 36,
+        "hookLines": 6,
+        "hookText": "我发现 我们普通人被传授的常识 真正成功的人 所践行的相反 不是不同 比如总有人说"
+      },
+      "pick": "逐字稿量出来的：276 秒 1461 字（5.3 字/秒），170 拍、平均一拍 1.6 秒，最长一次停顿 3 秒；前 8 秒把钩子说完（36 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-douyin-76826464",
+      "label": "254 秒口播 · 2 字/秒 · 每拍 3.7 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 254,
+      "order": 188900,
+      "source": {
+        "platform": "douyin",
+        "noteId": "7682646412693172209",
+        "title": "异世界加载中•掉进游戏我开始无限人生02 #异世界加载中 #即梦AI创作者成长计划 #AI创作浪潮计划 #不正经魔女日记 #魔女卡卡",
+        "url": "https://www.douyin.com/video/7682646412693172209",
+        "likes": "18.8万",
+        "collects": "",
+        "comments": "",
+        "heat": 188000
+      },
+      "structure": {
+        "durationSec": 254,
+        "beats": 70,
+        "chars": 508,
+        "charsPerSec": 2,
+        "beatSec": 3.7,
+        "maxGap": 14,
+        "hookSec": 8,
+        "hookChars": 24,
+        "hookLines": 4,
+        "hookText": "你来训练了 好多了 你今天还 有点骑手的样子了 斷发型了"
+      },
+      "pick": "逐字稿量出来的：254 秒 508 字（2 字/秒），70 拍、平均一拍 3.7 秒，最长一次停顿 14 秒；前 8 秒把钩子说完（24 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-douyin-76901813",
+      "label": "60 秒口播 · 4.1 字/秒 · 每拍 2.1 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 60,
+      "order": 176900,
+      "source": {
+        "platform": "douyin",
+        "noteId": "7690181330281323354",
+        "title": "当想法大于行动，你所有的认知就变成了精神内耗… #短视频创业 #自媒体创业 #拖延症 #认知 #蚁群视听",
+        "url": "https://www.douyin.com/video/7690181330281323354",
+        "likes": "17.6万",
+        "collects": "",
+        "comments": "",
+        "heat": 176000
+      },
+      "structure": {
+        "durationSec": 60,
+        "beats": 29,
+        "chars": 243,
+        "charsPerSec": 4.1,
+        "beatSec": 2.1,
+        "maxGap": 5,
+        "hookSec": 8,
+        "hookChars": 42,
+        "hookLines": 5,
+        "hookText": "贫穷的本质就是拖延 如果你的执行能力 完全跟不上你的认知 那么你所有的认知 都变成精神的内耗"
+      },
+      "pick": "逐字稿量出来的：60 秒 243 字（4.1 字/秒），29 拍、平均一拍 2.1 秒，最长一次停顿 5 秒；前 8 秒把钩子说完（42 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-douyin-76735407",
+      "label": "60 秒口播 · 5.5 字/秒 · 每拍 2 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 60,
+      "order": 165900,
+      "source": {
+        "platform": "douyin",
+        "noteId": "7673540735225361289",
+        "title": "人只会在自己的认知里说话，只筛选不改变，包括自己。 #认知觉醒干货 #认知觉醒底层逻辑 #日常思考记录 #认知思维的觉醒 #弱者思维与强者思维的区别",
+        "url": "https://www.douyin.com/video/7673540735225361289",
+        "likes": "16.5万",
+        "collects": "",
+        "comments": "",
+        "heat": 165000
+      },
+      "structure": {
+        "durationSec": 60,
+        "beats": 31,
+        "chars": 328,
+        "charsPerSec": 5.5,
+        "beatSec": 2,
+        "maxGap": 4,
+        "hookSec": 7,
+        "hookChars": 36,
+        "hookLines": 4,
+        "hookText": "一个痛苦的人去找给 自己制造痛苦的人谈话 本质上这不叫沟通 这叫请对方可怜自己"
+      },
+      "pick": "逐字稿量出来的：60 秒 328 字（5.5 字/秒），31 拍、平均一拍 2 秒，最长一次停顿 4 秒；前 7 秒把钩子说完（36 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-douyin-76570736",
+      "label": "209 秒口播 · 6.5 字/秒 · 每拍 1.5 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 209,
+      "order": 109900,
+      "source": {
+        "platform": "douyin",
+        "noteId": "7657073697567745363",
+        "title": "普通人靠一个好点子➕执行力就能赚到Ai红利 #ai搞钱#ai应用#ai开发 #ai赚钱 #ai赚钱方向",
+        "url": "https://www.douyin.com/video/7657073697567745363",
+        "likes": "10.9万",
+        "collects": "",
+        "comments": "",
+        "heat": 109000
+      },
+      "structure": {
+        "durationSec": 209,
+        "beats": 139,
+        "chars": 1352,
+        "charsPerSec": 6.5,
+        "beatSec": 1.5,
+        "maxGap": 3,
+        "hookSec": 8,
+        "hookChars": 61,
+        "hookLines": 7,
+        "hookText": "给大家看一下 我最近拿ai应用赚到的收入 因为现在这个赛道 还是蓝海比较有红利 就是做的人很少 所以我觉得啊 我也是占了一个时代的先机"
+      },
+      "pick": "逐字稿量出来的：209 秒 1352 字（6.5 字/秒），139 拍、平均一拍 1.5 秒，最长一次停顿 3 秒；前 8 秒把钩子说完（61 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-xiaohongshu-6a75b521",
+      "label": "144 秒口播 · 5.1 字/秒 · 每拍 1.7 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 144,
+      "order": 103610,
+      "source": {
+        "platform": "xiaohongshu",
+        "noteId": "6a75b521000000002500e95a",
+        "title": "Ins千万播放量的给二十多岁年轻人的建议",
+        "url": "https://www.xiaohongshu.com/explore/6a75b521000000002500e95a",
+        "likes": "102710",
+        "collects": "",
+        "comments": "",
+        "heat": 102710
+      },
+      "structure": {
+        "durationSec": 144,
+        "beats": 88,
+        "chars": 738,
+        "charsPerSec": 5.1,
+        "beatSec": 1.7,
+        "maxGap": 4,
+        "hookSec": 8,
+        "hookChars": 115,
+        "hookLines": 7,
+        "hookText": "我真的不允许有人没看过 紫学本具 这位ins老哥给20多岁年轻人的建议 手紫 本具 汉1新回女签TS.05干技州天 这位ins老哥给20多岁年轻人的建议 公S干公前 这位ins老哥给20多岁年轻人的建议 所以我27岁了 如果你是在你20多岁的时候 对吧"
+      },
+      "pick": "逐字稿量出来的：144 秒 738 字（5.1 字/秒），88 拍、平均一拍 1.7 秒，最长一次停顿 4 秒；前 8 秒把钩子说完（115 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-xiaohongshu-6a803fe6",
+      "label": "220 秒口播 · 6.5 字/秒 · 每拍 1.4 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 220,
+      "order": 96912,
+      "source": {
+        "platform": "xiaohongshu",
+        "noteId": "6a803fe600000000260362c9",
+        "title": "我 莫名变难看了。。。。",
+        "url": "https://www.xiaohongshu.com/explore/6a803fe600000000260362c9",
+        "likes": "96012",
+        "collects": "",
+        "comments": "",
+        "heat": 96012
+      },
+      "structure": {
+        "durationSec": 220,
+        "beats": 159,
+        "chars": 1434,
+        "charsPerSec": 6.5,
+        "beatSec": 1.4,
+        "maxGap": 3,
+        "hookSec": 8,
+        "hookChars": 71,
+        "hookLines": 8,
+        "hookText": "那不是整容能解決的问题 你下次再容貌焦虑的不行 想要去整容 我建议你先按以下的 看看你符合几种条件 超过3个以上 你都可以通过非do脸的方式 動塑己目长部 正"
+      },
+      "pick": "逐字稿量出来的：220 秒 1434 字（6.5 字/秒），159 拍、平均一拍 1.4 秒，最长一次停顿 3 秒；前 8 秒把钩子说完（71 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-xiaohongshu-6a46fcd3",
+      "label": "166 秒口播 · 4.4 字/秒 · 每拍 1.8 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 166,
+      "order": 63922,
+      "source": {
+        "platform": "xiaohongshu",
+        "noteId": "6a46fcd3000000001101f6c1",
+        "title": "孩子吃饭总追着喂？两招改掉挑食坏习惯",
+        "url": "https://www.xiaohongshu.com/explore/6a46fcd3000000001101f6c1",
+        "likes": "63022",
+        "collects": "",
+        "comments": "",
+        "heat": 63022
+      },
+      "structure": {
+        "durationSec": 166,
+        "beats": 95,
+        "chars": 725,
+        "charsPerSec": 4.4,
+        "beatSec": 1.8,
+        "maxGap": 4,
+        "hookSec": 6,
+        "hookChars": 21,
+        "hookLines": 5,
+        "hookText": "哈喽大家好 我是淇淇麻麻 不用追着娃 满崖嘌玻 坚"
+      },
+      "pick": "逐字稿量出来的：166 秒 725 字（4.4 字/秒），95 拍、平均一拍 1.8 秒，最长一次停顿 4 秒；前 6 秒把钩子说完（21 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-xiaohongshu-6a8176c9",
+      "label": "180 秒口播 · 5.9 字/秒 · 每拍 1.7 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 180,
+      "order": 62519,
+      "source": {
+        "platform": "xiaohongshu",
+        "noteId": "6a8176c900000000290325b7",
+        "title": "任何事情都不要害怕，所有的事情都不要害怕",
+        "url": "https://www.xiaohongshu.com/explore/6a8176c900000000290325b7",
+        "likes": "61619",
+        "collects": "",
+        "comments": "",
+        "heat": 61619
+      },
+      "structure": {
+        "durationSec": 180,
+        "beats": 109,
+        "chars": 1059,
+        "charsPerSec": 5.9,
+        "beatSec": 1.7,
+        "maxGap": 6,
+        "hookSec": 8,
+        "hookChars": 65,
+        "hookLines": 7,
+        "hookText": "任何事情都不要害怕 所有的事情都不要害怕 一切的事情都不要害怕 每一件事情都不要害怕 不要害怕没有钱 不要害怕没有工作 哪怕一个火过也不要害伯"
+      },
+      "pick": "逐字稿量出来的：180 秒 1059 字（5.9 字/秒），109 拍、平均一拍 1.7 秒，最长一次停顿 6 秒；前 8 秒把钩子说完（65 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-xiaohongshu-6a4e2597",
+      "label": "292 秒口播 · 6.1 字/秒 · 每拍 1.8 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 292,
+      "order": 50023,
+      "source": {
+        "platform": "xiaohongshu",
+        "noteId": "6a4e2597000000001c026d22",
+        "title": "自从接触了熵，我决定再也不玩手机了",
+        "url": "https://www.xiaohongshu.com/explore/6a4e2597000000001c026d22",
+        "likes": "49123",
+        "collects": "",
+        "comments": "",
+        "heat": 49123
+      },
+      "structure": {
+        "durationSec": 292,
+        "beats": 161,
+        "chars": 1769,
+        "charsPerSec": 6.1,
+        "beatSec": 1.8,
+        "maxGap": 6,
+        "hookSec": 8,
+        "hookChars": 59,
+        "hookLines": 6,
+        "hookText": "自从接触了熵 我就决定再也不玩手机了 就你有没有发现 每次拿起手机刷一会儿再放下 来 你会觉得更累不是更轻松了 就你有没有那种感觉"
+      },
+      "pick": "逐字稿量出来的：292 秒 1769 字（6.1 字/秒），161 拍、平均一拍 1.8 秒，最长一次停顿 6 秒；前 8 秒把钩子说完（59 字）。抄的是这个节奏，不是它的稿子。"
+    },
+    {
+      "key": "viral-xiaohongshu-6a45f994",
+      "label": "180 秒口播 · 5.2 字/秒 · 每拍 2 秒",
+      "kind": "爆款结构",
+      "status": "candidate",
+      "composition": "",
+      "project": "",
+      "fps": 0,
+      "size": "",
+      "durationSec": 180,
+      "order": 28081,
+      "source": {
+        "platform": "xiaohongshu",
+        "noteId": "6a45f994000000002103e594",
+        "title": "有野心但是有拖延症的人，想要自救一定要",
+        "url": "https://www.xiaohongshu.com/explore/6a45f994000000002103e594",
+        "likes": "27181",
+        "collects": "",
+        "comments": "",
+        "heat": 27181
+      },
+      "structure": {
+        "durationSec": 180,
+        "beats": 91,
+        "chars": 940,
+        "charsPerSec": 5.2,
+        "beatSec": 2,
+        "maxGap": 4,
+        "hookSec": 8,
+        "hookChars": 49,
+        "hookLines": 4,
+        "hookText": "有野心但是有拖延症的人想要 自救 一定要学会给自己做冷启动 如果你总是在等我准备好了再 开始 和今天已经废了"
+      },
+      "pick": "逐字稿量出来的：180 秒 940 字（5.2 字/秒），91 拍、平均一拍 2 秒，最长一次停顿 4 秒；前 8 秒把钩子说完（49 字）。抄的是这个节奏，不是它的稿子。"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+  }
+
+  .wrap { padding: 92px 96px 0; }
+
+  /* 页眉一条细线，左品牌右页码，字距拉开当小标 */
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--rule, #111);
+    font-size: 25px;
+    letter-spacing: .3em;
+    color: var(--ink-2, #6B6350);
+  }
+
+  /* 主标题：衬线巨字，行距压到 1.06，hot 走色块、pale 走淡底 */
+  .tag { margin-top: 96px; }
+  .tag .ln { display: block; }
+  .tag b {
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 152px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -.015em;
+  }
+  .tag b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); padding: 0 22px; }
+  .tag b.pale { color: var(--ink-2b, #3A3529); }
+
+  /* 标题下一条断行线，把封面切成上下两段 */
+  .bar { margin: 74px 0 46px; height: var(--rule-w, 5px); background: var(--rule, #111); }
+
+  .echo {
+    font-size: __ECHOSIZE__;
+    line-height: 1.62;
+    color: var(--ink-2b, #3A3529);
+    max-width: 940px;
+  }
+  .echo .em { font-weight: 700; color: var(--ink, #111); box-shadow: inset 0 -18px 0 var(--accent-soft, #BEAF85); }
+
+  /* 三条要点摊成两栏，方块点代替数字，英文退成小字 */
+  .rows {
+    margin-top: 62px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 48px;
+    row-gap: 46px;
+  }
+  .item .zh {
+    position: relative;
+    padding-left: 34px;
+    font-size: __ZH__;
+    font-weight: 600;
+    line-height: 1.44;
+  }
+  .item .zh::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .58em;
+    width: 15px;
+    height: 15px;
+    background: var(--accent-deep, #A08A5A);
+  }
+  .item .zh .em { font-weight: 700; background: var(--accent, #FAE79B); color: var(--accent-ink, #111); padding: 0 6px; }
+  .item .en {
+    margin-top: 12px;
+    padding-left: 34px;
+    font-size: __EN__;
+    letter-spacing: .02em;
+    color: var(--ink-3, #9A917C);
+  }
+
+  /* 收尾：三个箭头当页脚纹理 */
+  .foot {
+    position: absolute;
+    left: 96px;
+    right: 96px;
+    bottom: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 26px;
+    letter-spacing: .12em;
+    color: var(--ink-3, #9A917C);
+  }
+  .foot .arrows { font-size: 40px; font-weight: 800; letter-spacing: -.06em; color: var(--accent-deep, #A08A5A); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head"><span>__BRAND__</span><span>__PAGENO__</span></div>
+    <div class="tag">__TITLE__</div>
+    <div class="bar"></div>
+    <div class="echo">__ECHO__</div>
+    <div class="rows">__ROWS__</div>
+  </div>
+  <div class="foot"><span>__KICKER__</span><span class="arrows">&gt;&gt;&gt;</span></div>
+</body>
+</html>

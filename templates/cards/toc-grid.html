@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+  }
+  .serif { font-family: "Songti SC", "STSong", "SimSun", serif; }
+
+  .wrap { padding: 104px 96px 0; }
+
+  /* 页眉：一条粗线压住小字，右端放页码位 */
+  .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 26px;
+    border-bottom: var(--rule-w, 5px) solid var(--rule, #111);
+  }
+  .head .k {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: .34em;
+    color: var(--ink-2, #6B6350);
+  }
+  .head .n { font-size: 24px; letter-spacing: .1em; color: var(--ink-3, #9A917C); }
+
+  /* 标题：衬线大字，hot 词走色块，pale 词走下划线 */
+  .tag { margin: 62px 0 8px; }
+  .tag:empty { display: none; }
+  .tag .ln { display: block; }
+  .tag b {
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 92px;
+    font-weight: 700;
+    line-height: 1.24;
+    letter-spacing: -.01em;
+  }
+  .tag b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); padding: 2px 18px; }
+  .tag b.pale { box-shadow: inset 0 -14px 0 var(--accent-soft, #BEAF85); }
+
+  /* 编号行：序号单独一栏，中英上下叠，行间一条细线 */
+  .rows { counter-reset: row; margin-top: 40px; }
+  .item {
+    counter-increment: row;
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    column-gap: 34px;
+    padding: __GAP__ 0;
+    border-bottom: 1px solid var(--surface-2, #F2EADA);
+  }
+  .item:last-child { border-bottom: 0; }
+  .item::before {
+    content: counter(row, decimal-leading-zero);
+    font-family: "Songti SC", "STSong", "SimSun", serif;
+    font-size: 76px;
+    line-height: .96;
+    color: var(--ink-3, #9A917C);
+  }
+  .item:first-child::before { color: var(--accent-deep, #A08A5A); }
+  .item .zh { font-size: __ZH__; font-weight: 700; line-height: 1.46; }
+  .item .zh .em { color: var(--ink, #111); background: var(--accent, #FAE79B); padding: 0 8px; }
+  .item .zh .src { font-weight: 500; color: var(--ink-3, #9A917C); }
+  .item .en {
+    margin-top: 16px;
+    font-size: __EN__;
+    letter-spacing: .02em;
+    color: var(--ink-2, #6B6350);
+  }
+
+  .foot {
+    position: absolute;
+    left: 96px;
+    right: 96px;
+    bottom: 62px;
+    height: var(--rule-w, 5px);
+    background: var(--rule, #111);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head"><span class="k">__BRAND__</span><span class="n">__PAGENO__</span></div>
+    <div class="tag">__TITLE__</div>
+    <div class="rows">__ROWS__</div>
+  </div>
+  <div class="foot"></div>
+</body>
+</html>

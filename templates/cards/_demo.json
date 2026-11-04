@@ -1,0 +1,152 @@
+{
+  "_说明": "模板缩略图的固定示例内容：一个版式一份，渲染器按模板的 body 版式取对应那份渲一张 3:4 图。写这份的目的只有一个——让 12 条模板的小样之间可比：文字一样、图一样，只有版式和皮肤在变，用户才能一眼看出差别。它不是任何一稿真实卡片，也不进 content/ 知识库。改这里的文字不会让任何已发布内容变化，只会让选择器的小样在下次补渲时跟着变。",
+  "brand": "醒醒老己 · 地球Online",
+
+  "cover": {
+    "layout": "cover",
+    "title": [["每周只推进", "hot"], ["一件事", "pale"]],
+    "echo": "不是**贪多**做不完，是**并行**把注意力摊薄了",
+    "items": [
+      { "zh": "一周只定一个**能上线**的目标", "en": "One shipping goal a week" },
+      { "zh": "其余三条线索**记下来**，不当场开工", "en": "Park the rest, don't open them" }
+    ]
+  },
+  "items": {
+    "layout": "items",
+    "title": ["清单读不动，是因为它没给判断"],
+    "items": [
+      { "zh": "一条只写**一个动作**，不写形容词", "en": "One action per line" },
+      { "zh": "顺序按**今晚就能做完**的排", "en": "Order by what's doable tonight" },
+      { "zh": "超过五条**必须拆页**", "en": "Split the list past five" },
+      { "zh": "每条留**一句为什么**", "en": "Keep one reason per line" }
+    ]
+  },
+  "points": {
+    "layout": "points",
+    "title": [["把注意力当成预算", "pale"]],
+    "src": "自己的踩坑记录",
+    "srcEn": "Notes from my own misses",
+    "items": [
+      { "zh": "注意力是**按小时扣**的，不是按天补的", "en": "Attention is spent hourly, refunded never" },
+      { "zh": "一天里**前两小时**别开会", "en": "Keep the first two hours clear" },
+      { "zh": "切换成本**比干活本身**贵", "en": "Context switching costs more than the work" }
+    ]
+  },
+  "steps": {
+    "layout": "steps",
+    "title": [["把清晰的脑子养回来，四步", "hot"]],
+    "gap": 172,
+    "items": [
+      { "zh": "睡前 90 分钟**手机放到客厅**", "en": "Phone sleeps in the living room" },
+      { "zh": "起床**先看纸**，不看屏", "en": "Paper first, screens later" },
+      { "zh": "上午只开**一个窗口**干活", "en": "One window in the morning" },
+      { "zh": "晚上把明天的**一件事写下来**", "en": "Write tomorrow's one thing" }
+    ]
+  },
+  "split": {
+    "layout": "split",
+    "title": ["开三个号，还是把一个打透"],
+    "left": {
+      "name": "同时开三个号",
+      "nameEn": "Three accounts at once",
+      "tone": "pale",
+      "items": [
+        { "zh": "每个号**只能分到三天一次**" },
+        { "zh": "数据摊薄，**看不出哪条真有用**" },
+        { "zh": "选题反复重做，**没有积累**" }
+      ]
+    },
+    "right": {
+      "name": "一个号打透",
+      "nameEn": "One account, deep",
+      "tone": "hot",
+      "items": [
+        { "zh": "**每天**都有内容上线" },
+        { "zh": "同类内容连着发，**读者记得住**" },
+        { "zh": "复盘拿到**可比的数**" }
+      ]
+    },
+    "verdict": "先把**一个号**发到 60 篇，再谈多平台"
+  },
+  "quote": {
+    "layout": "quote",
+    "quote": "你不是时间不够，是「每次开工都要重新决定做什么」。",
+    "hl": "每次开工都要重新决定做什么",
+    "quoteEn": "You're not short of time. You re-decide what to do every time you sit down.",
+    "who": "自己写的",
+    "role": "第 47 篇里的那句"
+  },
+  "closing": {
+    "layout": "closing",
+    "kicker": "写在最后",
+    "head": [["一周只做一件事", "pale"]],
+    "lines": [
+      { "zh": "剩下的事不是放弃，是**排到下周**" },
+      { "zh": "能上线的东西**比计划值钱**" }
+    ],
+    "cta": "下周继续记一条"
+  },
+
+  "poster-marker": {
+    "layout": "poster-marker",
+    "tag": "一人公司系列 #07",
+    "title": [["每周只推进", "hot"], ["一件事", "pale"]],
+    "echo": "不是**贪多**做不完，是**并行**把注意力摊薄了",
+    "items": [
+      { "zh": "一周只定一个**能上线**的目标", "en": "One shipping goal a week" },
+      { "zh": "其余三条线索**记下来**，不当场开工", "en": "Park the rest, don't open them" }
+    ]
+  },
+  "note-shot": {
+    "layout": "note-shot",
+    "kicker": "醒醒老己",
+    "src": "2026 年 11 月 3 日 15:31",
+    "title": [["把注意力当成预算", "hot"]],
+    "echo": "说心里话，一天能用的注意力就那么点，前两个小时给了谁，今天就是谁的。以前我以为是时间不够，后来发现是**每次开工都要重新决定做什么**。",
+    "items": [
+      { "zh": "习惯 1：前两小时不开会", "en": "Keep the first two hours clear" },
+      { "zh": "习惯 2：上午只开一个窗口", "en": "One window in the morning" },
+      { "zh": "习惯 3：切换比干活贵", "en": "Switching costs more than the work" }
+    ]
+  },
+  "checklist-mark": {
+    "layout": "checklist-mark",
+    "title": [["今晚就能做完的四件事", "hot"]],
+    "gap": 66,
+    "items": [
+      { "zh": "把明天**唯一那件事**写在纸上", "en": "Write tomorrow's one thing" },
+      { "zh": "没做完的**全部挪出**待办清单", "en": "Move the rest off the list" },
+      { "zh": "手机**放到客厅**充电", "en": "Phone sleeps in the living room" },
+      { "zh": "明早**先看纸**再看屏", "en": "Paper first, screens later" }
+    ]
+  },
+  "sticky-note": {
+    "layout": "sticky-note",
+    "title": ["三条能立刻用的判断"],
+    "items": [
+      { "zh": "**能上线**才算做完", "en": "Shipped or it doesn't count" },
+      { "zh": "一周**只推一条**产品线", "en": "One line a week" },
+      { "zh": "选题**先看有没有人问过**", "en": "Check the questions first" },
+      { "zh": "数据**只看可比的那一个**", "en": "Only comparable numbers" }
+    ]
+  },
+  "stat-poster": {
+    "layout": "stat-poster",
+    "kicker": "一个数",
+    "quote": "87%",
+    "quoteEn": "of my sessions start by re-deciding",
+    "caption": "开工前**要重新决定做什么**的那几次，一天里真正写代码的时间不到一小时",
+    "src": "自己 47 篇的记录",
+    "srcEn": "Notes from my own 47 posts"
+  },
+  "closing-strip": {
+    "layout": "closing-strip",
+    "kicker": "写在最后",
+    "head": [["一周只做", "hot"], ["一件事", "pale"]],
+    "lines": [
+      { "zh": "剩下的事不是放弃，是**排到下周**" },
+      { "zh": "能上线的东西**比计划值钱**" }
+    ],
+    "cta": "下周继续记一条"
+  }
+}

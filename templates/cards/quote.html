@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FAF3E3);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    padding: 0 108px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .mark { font-size: 220px; line-height: .8; font-weight: 800; color: var(--ink, #111); margin-bottom: 34px; }
+  .q { font-size: 78px; font-weight: 700; line-height: 1.44; letter-spacing: 1px; }
+  .q .hl { background: var(--accent, #F6DF7C); color: var(--accent-ink, #111); padding: 0 10px; }
+  .en { margin-top: 40px; font-size: 40px; line-height: 1.5; color: var(--ink-2, #4A4436); }
+  .by {
+    margin-top: 76px;
+    padding-top: 34px;
+    border-top: var(--rule-w, 4px) solid var(--rule, #111);
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--ink, #111);
+  }
+  .by .role { display: block; margin-top: 14px; font-size: 32px; font-weight: 400; color: var(--ink-4, #7C7360); }
+</style>
+</head>
+<body>
+  <div class="mark">「</div>
+  <div class="q">__QUOTE__</div>
+  <div class="en">__QUOTE_EN__</div>
+  <div class="by">—— __WHO____ROLE__</div>
+</body>
+</html>

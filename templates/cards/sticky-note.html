@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+  }
+  /* 上下留白靠 grid 的 1fr 行高吃掉：便签只有四张，卡片按内容排的话
+     画面下三分之一必然空着。行高撑满、字在卡里居中，观感是「纸厚」而不是「没排完」。 */
+  .wrap { padding: 104px 84px 190px; display: flex; flex-direction: column; min-height: 1660px; }
+
+  .tag:empty { display: none; }
+  .tag { margin-bottom: 66px; font-size: 66px; font-weight: 900; line-height: 1.3; letter-spacing: 1px; }
+  .tag .ln { display: block; }
+  .tag b { display: inline-block; padding: 2px 14px; }
+  .tag b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); }
+  .tag b.pale { background: var(--surface-2, #F2EADA); }
+
+  /* 便签拼贴：每条一张小卡，交替歪一点、底色轮换，硬阴影不带模糊。
+     「手工贴上去」的观感是这一类的核心——它让读者觉得信息是被挑出来的，不是被写出来的。 */
+  .rows:empty { display: none; }
+  .rows { flex: 1 1 auto; display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 44px 40px; }
+  .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    min-height: 430px;
+    max-height: 520px;
+    padding: 44px 34px;
+    border: 5px solid var(--rule, #111);
+    box-shadow: 12px 12px 0 var(--ink, #111);
+  }
+  /* 四张卡的底色只用三对安全搭配：accent（配 accent-ink 字色）、surface-2、page。
+     --surface 不在名单里——深色皮的那一位是黑块色，压上正文字就没了。 */
+  .item:nth-child(4n + 1) { background: var(--accent, #FAE79B); transform: rotate(-1.4deg); }
+  .item:nth-child(4n + 1) .zh,
+  .item:nth-child(4n + 1) .en { color: var(--accent-ink, #111); }
+  .item:nth-child(4n + 2) { background: var(--page, #FFFDF8); transform: rotate(1.1deg); }
+  .item:nth-child(4n + 3) { background: var(--surface-2, #F2EADA); transform: rotate(1.6deg); }
+  .item:nth-child(4n + 4) { background: var(--page, #FFFDF8); transform: rotate(-1deg); }
+  /* 单数页最后一条落单：占满整行，不许留半张空卡 */
+  .item:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+  .item .zh { font-size: 48px; font-weight: 800; line-height: 1.42; letter-spacing: 0.5px; text-wrap: balance; }
+  .item .zh .em { text-decoration: underline; text-decoration-thickness: 6px; text-underline-offset: 7px; text-decoration-color: var(--rule, #111); }
+  .item .zh .src { font-weight: 500; font-size: 34px; }
+  /* 英文行不许比中文先折行：48px 中文吃 9 字，34px 英文吃 26 字符，正好比中文宽一档 */
+  .item .en { margin-top: 18px; font-size: 34px; font-weight: 500; line-height: 1.45; color: var(--ink-2, #6B6350); }
+
+  .foot {
+    position: absolute;
+    left: 84px;
+    right: 84px;
+    bottom: 54px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 30px;
+    color: var(--ink-3, #9A917C);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="tag">__TITLE__</div>
+    <div class="rows">__ROWS__</div>
+  </div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

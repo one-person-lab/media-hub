@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background: var(--page, #FFFDF8);
+    color: var(--ink, #111);
+    font-family: var(--font, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+    overflow: hidden;
+    position: relative;
+  }
+  .band { height: 140px; background: var(--surface, #FAF3E3); }
+  .wrap { padding: 64px 96px 0; display: flex; flex-direction: column; align-items: center; }
+
+  /* 标题：和 items 页同一套色块规则 */
+  .tag:empty { display: none; }
+  .tag { margin-bottom: 40px; text-align: center; }
+  .tag .ln { display: block; }
+  .tag b { font-size: 62px; font-weight: 800; line-height: 1.5; }
+  .tag b.hot { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); padding: 4px 14px; }
+  .tag b.pale { background: var(--surface-2, #F2EADA); padding: 4px 14px; }
+
+  /* 真机截图：黑描边 + 硬阴影，和卡片的粗野边框同一套语言 */
+  .phone {
+    width: 470px;
+    height: 1010px;
+    border: var(--rule-w, 5px) solid var(--rule, #111);
+    border-radius: 48px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 10px 10px 0 var(--rule, #111);
+  }
+  .phone img { width: 100%; height: 100%; object-fit: contain; object-position: top; display: block; }
+
+  .caption { margin-top: 44px; max-width: 920px; font-size: 38px; line-height: 1.55; text-align: center; }
+  .caption b.em { background: var(--accent, #FAE79B); color: var(--accent-ink, #111); font-weight: 700; padding: 2px 8px; }
+
+  .foot {
+    position: absolute;
+    left: 96px;
+    right: 96px;
+    bottom: 58px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 28px;
+    color: var(--ink-3, #9A917C);
+  }
+</style>
+</head>
+<body>
+  <div class="band"></div>
+  <div class="wrap">
+    <div class="tag">__TITLE__</div>
+    <div class="phone"><img src="__IMG__" alt=""></div>
+    <div class="caption">__CAPTION__</div>
+  </div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>

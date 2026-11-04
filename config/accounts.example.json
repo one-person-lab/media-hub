@@ -1,0 +1,20 @@
+[
+  {
+    "id": "小红书",
+    "platform": "小红书",
+    "key": "xiaohongshu",
+    "script": "./scripts/publish-xhs.mjs",
+    "backend": "https://creator.xiaohongshu.com/new/note-manager",
+    "nickname": "你的号昵称",
+    "note": "浏览器里登录的号即发布用的号（本机授权，登录态只存在这台机器上）。图文草稿为单槽覆盖，推新稿会顶掉旧草稿。"
+  },
+  {
+    "id": "抖音",
+    "platform": "抖音",
+    "key": "douyin",
+    "script": "./scripts/publish-douyin.mjs",
+    "backend": "https://creator.douyin.com/creator-micro/content/manage",
+    "nickname": "你的号昵称",
+    "note": "同上。抖音图文形态与小红书不同：图承载内容，文案框只写钩子 + 互动位。"
+  }
+]

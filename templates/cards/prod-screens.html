@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1242px; height: 1660px; }
+  body {
+    background:
+      radial-gradient(1000px 660px at 12% -10%, #2a2040 0%, rgba(42,32,64,0) 68%),
+      radial-gradient(900px 600px at 96% 78%, #241a38 0%, rgba(36,26,56,0) 70%),
+      linear-gradient(180deg, #0b0714 0%, #171122 52%, #0b0714 100%);
+    color: #fff;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    overflow: hidden; position: relative;
+  }
+  .blob { position: absolute; border-radius: 50%; }
+  .b1 { width: 420px; height: 420px; right: -140px; top: -130px; background: #a78bfa; opacity: .14; }
+  .b2 { width: 240px; height: 240px; left: -80px; top: 860px; background: #6bc5f0; opacity: .1; }
+
+  .head { position: absolute; left: 88px; right: 88px; top: 92px; }
+  .kicker { font-size: 28px; letter-spacing: 3px; color: #a78bfa; }
+  .title { margin-top: 16px; }
+  .ln { display: block; }
+  .title b { font-size: __ZH__; line-height: 1.3; font-weight: 900; letter-spacing: -1px; }
+  .title b.hot { color: #ffd166; }
+  .title b.pale { color: #ff8b6a; }
+
+  .stage { position: absolute; left: 0; right: 0; top: __GAP__; display: flex; justify-content: center; gap: 54px; }
+  .shot { width: 400px; }
+  .shot + .shot { margin-top: 40px; }
+  .phone {
+    width: 400px; height: 834px;
+    border: 4px solid rgba(167,139,250,.36); border-radius: 50px; overflow: hidden; background: #171122;
+    box-shadow: 0 36px 92px rgba(0,0,0,.7), 0 0 100px rgba(167,139,250,.14);
+  }
+  .shot:first-child .phone { transform: rotate(-2.5deg); }
+  .shot:last-child .phone { transform: rotate(2.5deg); border-color: rgba(255,209,102,.34); }
+  .phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+
+  /* 两条 rows 就是两张屏的说明，左右各占一栏，和手机对齐 */
+  .caps { position: absolute; left: 88px; right: 88px; bottom: 172px; display: flex; gap: 54px; }
+  .caps .item { flex: 1 1 0; text-align: center; }
+  .caps .zh { font-size: 36px; font-weight: 800; color: #ffd166; }
+  .caps .zh b.em { color: #fff; }
+  .caps .src { display: block; margin-top: 10px; font-size: 28px; line-height: 1.5; color: #b3a9d4; }
+  .caps .en { display: none; }
+
+  .caption { position: absolute; left: 88px; right: 88px; bottom: 108px; text-align: center;
+    font-size: 29px; color: #8d82ac; }
+  .caption b.em { color: #c9c1e6; font-weight: 700; }
+
+  .foot {
+    position: absolute; left: 88px; right: 88px; bottom: 52px;
+    display: flex; justify-content: space-between; font-size: 27px; color: #6f6488;
+  }
+</style>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="head">
+    <div class="kicker">__KICKER__</div>
+    <div class="title">__TITLE__</div>
+  </div>
+  <div class="stage">
+    <div class="shot"><div class="phone"><img src="__IMG__" alt=""></div></div>
+    <div class="shot"><div class="phone"><img src="__IMG2__" alt=""></div></div>
+  </div>
+  <div class="caps">__ROWS__</div>
+  <div class="caption">__CAPTION__</div>
+  <div class="foot"><span>__BRAND__</span><span>__PAGENO__</span></div>
+</body>
+</html>
